@@ -1,0 +1,22 @@
+# NeuroDivergeAgent
+
+> Two free AI agent profiles for neurodivergent people and the families who love them. One for the whole family. One for you alone.
+
+## Products
+
+- The Family Agent (available now, free): twelve specialist support skills for families raising neurodiverse children. Runs on Hermes Agent, private and local-first. Repo: https://github.com/boktoday/neurofamily-hermes-agent
+- The Individual Agent (in development, will be free): a support team for one neurodivergent adult: routines, sensory life, work self-advocacy, burnout guardrails, life admin.
+
+## Key pages
+
+- Website: https://neurodivergeagent.com
+- Family Agent install guide: https://github.com/boktoday/neurofamily-hermes-agent/blob/main/INSTALL.md
+- Family Agent design document: https://github.com/boktoday/neurofamily-hermes-agent/blob/main/docs/ecosystem-complete.md
+
+## Principles
+
+Neurodiversity-affirming, strengths-based, trauma-informed, private and local, free forever. An assistant, not a companion. Never therapy or diagnosis; crises route to humans.
+
+## Contact
+
+brendan@aichampion.com.au

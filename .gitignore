@@ -1,0 +1,14 @@
+# Editor
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Node (in case tooling is added later)
+node_modules/
+
+# Vercel
+.vercel
+
+# Logs
+*.log

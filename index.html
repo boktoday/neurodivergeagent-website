@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeuroDivergeAgent - free AI support for neurodivergent people and families</title>
+<meta name="description" content="Two free AI agent profiles: the Family Agent for families raising neurodiverse children, and the Individual Agent for neurodivergent adults. Private, local-first, neurodiversity-affirming.">
+<link rel="canonical" href="https://neurodivergeagent.com/">
+<meta property="og:title" content="NeuroDivergeAgent - free AI support for neurodivergent people and families">
+<meta property="og:description" content="Two free agent profiles. One for the whole family. One for you alone. Private by design, neurodiversity-affirming, built with love.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://neurodivergeagent.com/">
+<meta property="og:image" content="https://neurodivergeagent.com/assets/ecosystem-sketch.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NeuroDivergeAgent">
+<meta name="twitter:description" content="Two free AI agent profiles for neurodivergent people and the families who love them.">
+<meta name="twitter:image" content="https://neurodivergeagent.com/assets/ecosystem-sketch.jpg">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"NeuroDivergeAgent","url":"https://neurodivergeagent.com/","description":"Two free AI agent profiles for neurodivergent people and families raising neurodiverse children.","sameAs":["https://github.com/boktoday/neurodivergeagent-profile","https://github.com/boktoday/neurofamily-hermes-agent"]}
+</script>
+<style>
+  :root {
+    --paper: #f7f2e7;
+    --paper-2: #fdfaf2;
+    --ink: #2e2c29;
+    --ink-soft: #5b5750;
+    --sage: #b7c6a6;
+    --sage-deep: #6f8f5f;
+    --terra: #e3a468;
+    --terra-deep: #c47a3a;
+    --blue: #9fb6c2;
+    --blue-deep: #6e93a6;
+    --rose: #eab7bc;
+    --rose-deep: #c97f8b;
+    --mustard: #e9bc4a;
+    --leaf: #7c9a6d;
+    --shadow: 4px 4px 0 rgba(46, 44, 41, 0.85);
+    --border: 2px solid var(--ink);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "Inter", system-ui, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.6;
+    font-size: 16px;
+  }
+  .hand { font-family: "Patrick Hand", cursive; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+  section { padding: 64px 0; }
+  h1, h2, h3 { line-height: 1.15; font-weight: 400; }
+  h1 { font-family: "Patrick Hand", cursive; font-size: clamp(2.4rem, 6vw, 4rem); }
+  h2 { font-family: "Patrick Hand", cursive; font-size: clamp(1.8rem, 4vw, 2.6rem); margin-bottom: 8px; }
+  h3 { font-size: 1.05rem; font-weight: 700; }
+  p { color: var(--ink-soft); }
+  .kicker {
+    display: inline-block; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; background: var(--mustard); border: var(--border);
+    padding: 4px 12px; margin-bottom: 18px; box-shadow: 3px 3px 0 rgba(46,44,41,0.85);
+  }
+  .btn {
+    display: inline-block; font-family: "Inter", sans-serif; font-weight: 700; font-size: 0.95rem;
+    padding: 12px 22px; border: var(--border); border-radius: 0; cursor: pointer;
+    background: var(--terra); color: var(--ink); text-decoration: none; box-shadow: var(--shadow);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 rgba(46,44,41,0.85); }
+  .btn.ghost { background: var(--paper-2); }
+  .btn.sage { background: var(--sage); }
+  .btn.blue { background: var(--blue); }
+
+  /* nav */
+  nav {
+    position: sticky; top: 0; z-index: 50; background: var(--paper);
+    border-bottom: var(--border);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 20px; max-width: 1120px; margin: 0 auto; flex-wrap: wrap; }
+  .wordmark { font-family: "Patrick Hand", cursive; font-size: 1.35rem; text-decoration: none; color: var(--ink); }
+  .wordmark .dot { color: var(--terra-deep); }
+  .nav-links { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; }
+  .nav-links a { color: var(--ink); text-decoration: none; font-weight: 600; font-size: 0.9rem; border-bottom: 2px solid transparent; }
+  .nav-links a:hover { border-bottom-color: var(--terra-deep); }
+  .nav-cta { font-size: 0.85rem; padding: 8px 14px; }
+
+  /* hero */
+  .hero { padding: 72px 0 56px; }
+  .hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 40px; align-items: center; }
+  .hero p.lede { font-size: 1.15rem; max-width: 34rem; margin: 16px 0 26px; }
+  .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+  .hero-img { border: var(--border); background: #fff; box-shadow: var(--shadow); transform: rotate(-0.6deg); }
+  .hero-img img { display: block; width: 100%; height: auto; }
+  .hero-img figcaption { font-size: 0.78rem; color: var(--ink-soft); padding: 8px 12px; border-top: var(--border); }
+
+  /* product cards */
+  .products { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .product {
+    border: var(--border); background: var(--paper-2); box-shadow: var(--shadow);
+    padding: 26px; display: flex; flex-direction: column; gap: 12px;
+  }
+  .product .status { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+  .chip { display: inline-block; border: var(--border); padding: 2px 10px; font-size: 0.75rem; font-weight: 700; }
+  .chip.now { background: var(--sage); }
+  .chip.soon { background: var(--blue); }
+  .product ul { margin: 4px 0 10px 18px; color: var(--ink-soft); }
+  .product li { margin: 4px 0; }
+  .product .foot { margin-top: auto; display: flex; gap: 12px; flex-wrap: wrap; }
+
+  /* family */
+  .band { margin-bottom: 26px; }
+  .band-head {
+    display: inline-block; font-family: "Patrick Hand", cursive; font-size: 1.3rem;
+    border: var(--border); padding: 4px 16px; box-shadow: 3px 3px 0 rgba(46,44,41,0.85); margin-bottom: 16px;
+  }
+  .band.core .band-head { background: var(--sage); }
+  .band.coord .band-head { background: var(--terra); }
+  .band.coach .band-head { background: var(--rose); }
+  .band.tools .band-head { background: var(--blue); }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .card { border: var(--border); background: var(--paper-2); padding: 18px; }
+  .card h3 { display: flex; align-items: center; gap: 8px; }
+  .card p { font-size: 0.92rem; margin-top: 6px; }
+  .nav-card {
+    border: var(--border); background: var(--mustard); padding: 22px;
+    box-shadow: var(--shadow); margin-bottom: 26px;
+    display: grid; grid-template-columns: auto 1fr; gap: 18px; align-items: center;
+  }
+  .nav-card .compass { font-size: 2.6rem; line-height: 1; }
+  .nav-card p { color: var(--ink); }
+
+  /* how */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; counter-reset: step; }
+  .step { border: var(--border); background: var(--paper-2); padding: 22px; position: relative; }
+  .step::before {
+    counter-increment: step; content: counter(step);
+    font-family: "Patrick Hand", cursive; font-size: 1.6rem;
+    display: flex; align-items: center; justify-content: center;
+    width: 44px; height: 44px; border: var(--border); background: var(--sage);
+    margin-bottom: 12px; box-shadow: 3px 3px 0 rgba(46,44,41,0.85);
+  }
+  .steps .step:nth-child(2)::before { background: var(--terra); }
+  .steps .step:nth-child(3)::before { background: var(--rose); }
+
+  /* beliefs */
+  .beliefs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .belief { border: 2px dashed var(--ink); padding: 14px 16px; background: var(--paper-2); font-weight: 600; font-size: 0.92rem; }
+  .belief span { display: block; color: var(--ink-soft); font-weight: 400; font-size: 0.85rem; margin-top: 2px; }
+
+  /* faq */
+  details { border: var(--border); background: var(--paper-2); margin-bottom: 12px; }
+  summary { cursor: pointer; font-weight: 700; padding: 16px 20px; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; font-family: "Patrick Hand", cursive; font-size: 1.4rem; line-height: 1; }
+  details[open] summary::after { content: "-"; }
+  details .answer { padding: 0 20px 18px; color: var(--ink-soft); }
+
+  /* connect */
+  .connect { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .panel { border: var(--border); background: var(--paper-2); padding: 26px; box-shadow: var(--shadow); }
+  .panel h3 { font-family: "Patrick Hand", cursive; font-size: 1.4rem; font-weight: 400; margin-bottom: 6px; }
+  .panel p.sub { font-size: 0.9rem; margin-bottom: 16px; }
+  .field { margin-bottom: 12px; }
+  .field label { display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 4px; }
+  .field input, .field textarea {
+    width: 100%; font: inherit; padding: 11px 12px; border: var(--border); border-radius: 0;
+    background: #fff; color: var(--ink);
+  }
+  .field textarea { min-height: 120px; resize: vertical; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .form-status { font-size: 0.9rem; font-weight: 600; margin-top: 10px; display: none; }
+  .form-status.ok { display: block; color: var(--sage-deep); }
+  .form-status.err { display: block; color: var(--rose-deep); }
+  .fine { font-size: 0.78rem; color: var(--ink-soft); margin-top: 12px; }
+
+  footer { border-top: var(--border); padding: 36px 0 44px; background: var(--paper-2); }
+  .foot-grid { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  .foot-grid a { color: var(--ink); font-weight: 600; text-decoration: none; border-bottom: 2px solid var(--mustard); }
+  .foot-grid a:hover { border-bottom-color: var(--terra-deep); }
+  .foot-note { font-size: 0.82rem; color: var(--ink-soft); margin-top: 18px; max-width: 46rem; }
+
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .products, .connect { grid-template-columns: 1fr; }
+    .cards, .steps, .beliefs { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .cards, .steps, .beliefs { grid-template-columns: 1fr; }
+    section { padding: 44px 0; }
+    .nav-card { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="wordmark" href="#top">Neuro<span class="dot">Diverge</span>Agent</a>
+    <div class="nav-links">
+      <a href="#family">The Family Agent</a>
+      <a href="#individual">The Individual Agent</a>
+      <a href="#how">How it works</a>
+      <a href="#faq">FAQ</a>
+      <a href="#connect">Contact</a>
+      <a class="btn ghost nav-cta" href="#family">Get started, free</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="kicker">Neurodivergent + Agent = NeuroDivergeAgent</span>
+      <h1>Two free AI agents for neurodivergent lives.</h1>
+      <p class="lede">One for the whole family, built around a child's needs. One for you alone, built around yours. Both run privately on your own laptop, both are free, and both start from the same belief: neurological differences are natural human variation, not problems to be fixed.</p>
+      <div class="hero-ctas">
+        <a class="btn" href="#family">Meet the Family Agent</a>
+        <a class="btn ghost" href="#individual">The Individual Agent, in development</a>
+      </div>
+    </div>
+    <figure class="hero-img">
+      <img src="assets/ecosystem-sketch.jpg" alt="Illustrated overview of the NeuroFamily support ecosystem: a Family Navigator at the centre, surrounded by specialist roles for emotional coaching, sensory support, communication, education advocacy, behaviour, routines, food, siblings, parents and building tools.">
+      <figcaption>The Family Agent's support team, sketched out.</figcaption>
+    </figure>
+  </div>
+</header>
+
+<section id="products">
+  <div class="wrap">
+    <div class="products">
+      <div class="product">
+        <span class="chip now">Available now, free</span>
+        <h3 class="hand" style="font-size:1.6rem;">The Family Agent</h3>
+        <p>For families raising neurodiverse children. Twelve specialist support roles, one shared picture of your family, delivered through your family's WhatsApp group.</p>
+        <ul>
+          <li>Family Navigator, Emotional Coach, Sensory Guide, and more</li>
+          <li>Shared family folder so every specialist knows the full story</li>
+          <li>Optional check-ins: morning anchors, weekly family review, carer wellbeing</li>
+          <li>Private by design, works fully offline</li>
+        </ul>
+        <div class="foot">
+          <a class="btn sage" href="#family">Explore it</a>
+          <a class="btn ghost" href="https://github.com/boktoday/neurofamily-hermes-agent" target="_blank" rel="noopener">Get it on GitHub</a>
+        </div>
+      </div>
+      <div class="product">
+        <span class="chip soon">In development, will be free</span>
+        <h3 class="hand" style="font-size:1.6rem;">The Individual Agent</h3>
+        <p>For neurodivergent adults. A similar support team built around one person: you, your routines, your work, your energy.</p>
+        <ul>
+          <li>Daily structure that actually holds (executive function support)</li>
+          <li>Sensory life: environments, regulation, recovery</li>
+          <li>Self-advocacy at work: scripts, letters, meeting prep</li>
+          <li>Burnout guardrails and life admin that clears itself</li>
+        </ul>
+        <div class="foot">
+          <a class="btn blue" href="#connect">Join the waiting list</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="family" style="background:var(--paper-2); border-top:var(--border); border-bottom:var(--border);">
+  <div class="wrap">
+    <h2>Meet the Family Agent</h2>
+    <p style="max-width:44rem; margin-bottom:26px;">A multidisciplinary support team in your pocket: a coordinator, an OT-minded sensory guide, a school advocate, a feeding specialist, a carer companion, and more. Every role works from one shared picture of your family, and every role carries the same hard rails: support, never therapy or diagnosis, and crises always route to humans.</p>
+
+    <div class="nav-card">
+      <div class="compass">&#129517;</div>
+      <div>
+        <h3 class="hand" style="font-size:1.35rem; font-weight:400;">The Family Navigator, your front door</h3>
+        <p>It gets to know your family first, then routes each need to the right specialist while holding the big picture. Warm, practical, and always aware of what the rest of the team knows.</p>
+      </div>
+    </div>
+
+    <div class="band core">
+      <span class="band-head">Core support team</span>
+      <div class="cards">
+        <div class="card"><h3>&#129293; Emotional Coach</h3><p>Meltdowns, anxiety, emotional regulation, recovery plans.</p></div>
+        <div class="card"><h3>&#127744; Sensory Guide</h3><p>Sensory profiles, environment design, sensory diets, fine motor.</p></div>
+        <div class="card"><h3>&#128172; Communication Specialist</h3><p>AAC, social scripts, language support at home.</p></div>
+      </div>
+    </div>
+
+    <div class="band coord">
+      <span class="band-head">Family coordination</span>
+      <div class="cards">
+        <div class="card"><h3>&#128218; Education Advocate</h3><p>IEPs, EHCPs, 504s, ILPs, school rights, meeting prep and letters.</p></div>
+        <div class="card"><h3>&#129513; Behaviour Advisor</h3><p>Behaviour patterns, functions, proactive support plans.</p></div>
+        <div class="card"><h3>&#128197; Routine Architect</h3><p>Visual schedules, transitions, executive function scaffolding.</p></div>
+      </div>
+    </div>
+
+    <div class="band coach">
+      <span class="band-head">Specialised coaches</span>
+      <div class="cards">
+        <div class="card"><h3>&#128640; Young Person Coach</h3><p>Independence, identity, self-advocacy, future planning.</p></div>
+        <div class="card"><h3>&#127822; Food Support</h3><p>ARFID, safe foods, food diaries, low-stress mealtimes.</p></div>
+        <div class="card"><h3>&#127803; Sibling Support</h3><p>The sibling's feelings, identity and fair attention.</p></div>
+      </div>
+    </div>
+
+    <div class="band tools">
+      <span class="band-head">Tools</span>
+      <div class="cards">
+        <div class="card"><h3>&#127855; Parent Companion</h3><p>Carer burnout, grief, respite, keeping the adults standing.</p></div>
+        <div class="card"><h3>&#127912; Artifacts Generator</h3><p>Visual tools, trackers, printable passports, family mini-apps.</p></div>
+        <div class="card" style="background:var(--mustard);"><h3>&#10024; Free, forever</h3><p>Free to download, free for families, with credit. Private and local first: your family's story stays on your machine.</p></div>
+      </div>
+    </div>
+
+    <div style="margin-top:10px; display:flex; gap:14px; flex-wrap:wrap;">
+      <a class="btn" href="https://github.com/boktoday/neurofamily-hermes-agent" target="_blank" rel="noopener">Get the Family Agent on GitHub</a>
+      <a class="btn ghost" href="https://github.com/boktoday/neurofamily-hermes-agent/blob/main/INSTALL.md" target="_blank" rel="noopener">Read the install guide</a>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <h2>How it works</h2>
+    <p style="max-width:40rem; margin-bottom:26px;">No subscription, no app store, no data deal. The agent lives on your machine and talks to you where your family already lives.</p>
+    <div class="steps">
+      <div class="step">
+        <h3>Get a laptop and Hermes</h3>
+        <p>Any laptop from the last several years works. Hermes Agent is the free software underneath; the install guide walks you through it.</p>
+      </div>
+      <div class="step">
+        <h3>Add the agent profile</h3>
+        <p>Copy in the twelve specialist skills, run the one-command family folder setup, and have your first chat with the Family Navigator to build your family profile.</p>
+      </div>
+      <div class="step">
+        <h3>Bring in the family group</h3>
+        <p>Connect the agent to a WhatsApp group (or Telegram): everyone in the family can talk to the team, voice notes included. Optional check-ins keep it ticking.</p>
+      </div>
+    </div>
+    <p class="fine" style="margin-top:18px;">Prefer staying offline? The whole thing runs with local models and local voice, with nothing leaving your machine.</p>
+  </div>
+</section>
+
+<section id="individual" style="background:linear-gradient(0deg, rgba(159,182,194,0.25), rgba(159,182,194,0.25)); border-top:var(--border); border-bottom:var(--border);">
+  <div class="wrap">
+    <h2>The Individual Agent is next</h2>
+    <p style="max-width:44rem; margin-bottom:22px;">The same craft, built for one neurodivergent adult. Not a productivity guru in your pocket. A support team that knows your sensory world, your energy budget, your strengths, and the systems that keep failing you.</p>
+    <div class="beliefs">
+      <div class="belief">Routines that hold<span>built around your real energy, not fantasy discipline</span></div>
+      <div class="belief">Sensory life<span>environments, regulation, recovery, honest limits</span></div>
+      <div class="belief">Work self-advocacy<span>scripts for the hard conversations, letters that get accommodation</span></div>
+      <div class="belief">Burnout guardrails<span>early warning signals and pre-planned recoveries</span></div>
+      <div class="belief">Life admin, cleared<span>forms, appointments, the pile of small things</span></div>
+      <div class="belief">Proudly ND<span>strengths-based, affirming, never curing</span></div>
+    </div>
+    <div style="margin-top:22px;">
+      <a class="btn blue" href="#connect">Join the waiting list, it's free</a>
+    </div>
+  </div>
+</section>
+
+<section id="beliefs">
+  <div class="wrap">
+    <h2>What both agents live by</h2>
+    <div class="beliefs" style="margin-top:20px;">
+      <div class="belief">Neurodiversity-affirming<span>differences are variation, not deficits</span></div>
+      <div class="belief">Strengths first<span>find what's brilliant and build from there</span></div>
+      <div class="belief">Trauma-informed<span>many families arrive exhausted by systems; respect is the starting point</span></div>
+      <div class="belief">Private and local<span>your data stays on your machine, full stop</span></div>
+      <div class="belief">An assistant, not a companion<span>a tool for real life and real human relationships</span></div>
+      <div class="belief">Hard rails<span>never therapy, never diagnosis; crises route to humans, every time</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" style="background:var(--paper-2); border-top:var(--border);">
+  <div class="wrap">
+    <h2 class="hand" style="margin-bottom:20px;">Questions people actually ask</h2>
+    <details>
+      <summary>Is this really free?</summary>
+      <div class="answer">Yes. Both agent profiles are free to download and free to use for families and individuals, with credit. The Hermes software underneath is open source. There is no subscription and no data deal; the whole point is putting real support within reach.</div>
+    </details>
+    <details>
+      <summary>What do I need to run it?</summary>
+      <div class="answer">A laptop or desktop from the last several years, about 30 minutes for setup, and a free model provider account (or local models for fully offline running). The install guide covers both paths step by step.</div>
+    </details>
+    <details>
+      <summary>Is it therapy? Can it diagnose my child?</summary>
+      <div class="answer">No, and it will tell you so plainly. It supports the family: strategies, schedules, advocacy, tracking, conversations. Diagnosis stays with clinicians, therapy stays with therapists, and crises go straight to humans with real phone numbers.</div>
+    </details>
+    <details>
+      <summary>Where does our family's information go?</summary>
+      <div class="answer">Onto your own machine, in plain files you can read. If you use a cloud model, chat text goes to that provider; if you use local models, nothing leaves the machine at all. Optional calendar and mail connections are off by default and read-first when on.</div>
+    </details>
+    <details>
+      <summary>When will the Individual Agent be ready?</summary>
+      <div class="answer">It is in development now. Join the list below and you will hear when it lands. Family Agent first, because it is already here and working.</div>
+    </details>
+    <details>
+      <summary>How can I help?</summary>
+      <div class="answer">Try it with your family and tell us what breaks. Share it with a family or a neurodivergent adult who needs it. Say hello below, we answer.</div>
+    </details>
+  </div>
+</section>
+
+<section id="connect">
+  <div class="wrap">
+    <h2>Say hello</h2>
+    <p style="max-width:40rem; margin-bottom:26px;">Questions, ideas, bug reports from real family life, or just want to know when the Individual Agent lands. Both are free, so is the conversation.</p>
+    <div class="connect">
+      <div class="panel">
+        <h3>Contact us</h3>
+        <p class="sub">We read everything and reply.</p>
+        <form id="contact-form" data-endpoint="">
+          <div class="field"><label for="c-name">Your name</label><input id="c-name" name="name" type="text" autocomplete="name" required></div>
+          <div class="field"><label for="c-email">Email</label><input id="c-email" name="email" type="email" autocomplete="email" required></div>
+          <div class="field"><label for="c-message">Message</label><textarea id="c-message" name="message" required></textarea></div>
+          <div class="hp"><label for="c-web">Leave this empty</label><input id="c-web" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+          <button class="btn" type="submit">Send message</button>
+          <div class="form-status" id="contact-status" role="status"></div>
+          <p class="fine">Or email <a href="mailto:brendan@aichampion.com.au" style="color:var(--ink); font-weight:600;">brendan@aichampion.com.au</a> directly.</p>
+        </form>
+      </div>
+      <div class="panel">
+        <h3>Get the updates</h3>
+        <p class="sub">Occasional, useful, no spam. Individual Agent launch news and Family Agent improvements.</p>
+        <form id="newsletter-form" data-endpoint="">
+          <div class="field"><label for="n-name">First name</label><input id="n-name" name="first_name" type="text" autocomplete="given-name"></div>
+          <div class="field"><label for="n-email">Email</label><input id="n-email" name="email" type="email" autocomplete="email" required></div>
+          <div class="hp"><label for="n-web">Leave this empty</label><input id="n-web" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+          <button class="btn sage" type="submit">Subscribe</button>
+          <div class="form-status" id="newsletter-status" role="status"></div>
+          <p class="fine">One click to leave any time. Your email is used for nothing else.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a href="https://github.com/boktoday/neurofamily-hermes-agent" target="_blank" rel="noopener">The Family Agent, on GitHub</a><br><br>
+        <a href="https://github.com/boktoday/neurodivergeagent-profile" target="_blank" rel="noopener">This site's repo</a>
+      </div>
+      <div style="text-align:right;">
+        <span class="hand" style="font-size:1.3rem;">Neuro<span style="color:var(--terra-deep);">Diverge</span>Agent</span><br>
+        <span style="font-size:0.85rem; color:var(--ink-soft);">Free for families and individuals.</span>
+      </div>
+    </div>
+    <p class="foot-note">Not medical, legal or therapeutic advice. If you or someone in your family is in crisis, contact your local emergency number or crisis line. Built with love and Hermes Agent. Copyright 2026 Brendan O'Keefe. The agent profiles are free to download and free for noncommercial use, with credit.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  function wire(formId, statusId, endpointType, mailSubject, mailBodyBuilder) {
+    var form = document.getElementById(formId);
+    var status = document.getElementById(statusId);
+    if (!form) return;
+    form.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      if (form.querySelector(".hp input").value) return; // honeypot caught
+      var endpoint = form.getAttribute("data-endpoint");
+      var data = {};
+      new FormData(form).forEach(function (v, k) { if (k !== "website") data[k] = v; });
+      function show(el, kind, msg) {
+        status.className = "form-status " + kind;
+        status.textContent = msg;
+      }
+      if (endpoint) {
+        show(status, "ok", "Sending...");
+        fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify(data)
+        }).then(function (r) {
+          if (r.ok) {
+            form.reset();
+            show(status, "ok", endpointType === "newsletter" ? "You are on the list. Welcome aboard." : "Message sent. We will get back to you soon.");
+          } else {
+            show(status, "err", "Something went wrong (" + r.status + "). Please email us instead.");
+          }
+        }).catch(function () {
+          show(status, "err", "Network hiccup. Please email us instead.");
+        });
+      } else {
+        var subject = encodeURIComponent(mailSubject);
+        var body = encodeURIComponent(mailBodyBuilder(data));
+        window.location.href = "mailto:brendan@aichampion.com.au?subject=" + subject + "&body=" + body;
+        show(status, "ok", "Opening your email app to finish sending...");
+      }
+    });
+  }
+  wire("contact-form", "contact-status", "contact", "NeuroDivergeAgent website enquiry",
+    function (d) { return "Name: " + (d.name || "") + "\nEmail: " + (d.email || "") + "\n\n" + (d.message || ""); });
+  wire("newsletter-form", "newsletter-status", "newsletter", "Subscribe to NeuroDivergeAgent updates",
+    function (d) { return "Please add me to the NeuroDivergeAgent update list.\n\nName: " + (d.first_name || "") + "\nEmail: " + (d.email || ""); });
+})();
+</script>
+</body>
+</html>
