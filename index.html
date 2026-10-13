@@ -48,13 +48,15 @@
   .btn.top { padding: 9px 16px; font-size: 0.85rem; background: var(--mustard); color: var(--ink); border-color: var(--mustard); }
 
   .hero { background: var(--terra); }
-  .hero .in { display: grid; grid-template-columns: 8fr 4fr; gap: 48px; padding: 96px 0 84px; align-items: center; }
+  .hero .in { display: grid; grid-template-columns: 7fr 5fr; gap: 44px; padding: 88px 0 72px; align-items: center; }
   .kicker { font-family: "Space Grotesk", sans-serif; font-weight: 500; font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 22px; opacity: 0.8; }
   h1 { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: clamp(2.6rem, 5.6vw, 4.6rem); line-height: 1.0; letter-spacing: -0.035em; }
   .lede { margin: 24px 0 32px; font-size: 1.08rem; max-width: 46ch; opacity: 0.92; }
   .cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
-  .hero .fact { border-left: 2px solid var(--ink); padding-left: 20px; font-size: 0.95rem; }
-  .hero .fact p { margin: 8px 0; font-weight: 500; }
+  .facts-row { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 26px; }
+  .facts-row span { font-size: 0.86rem; font-weight: 600; border-left: 2px solid var(--ink); padding-left: 12px; opacity: 0.92; }
+  .hero-art { min-width: 0; }
+  .hero-art img { display: block; width: 100%; max-width: 560px; height: auto; margin: 0 auto; }
 
   .stats { background: var(--mustard); }
   .stats .in { display: grid; grid-template-columns: repeat(4, 1fr); }
@@ -158,6 +160,7 @@
       <a href="#individual">Individual Agent</a>
       <a href="#how">How it works</a>
       <a href="#connect">Contact</a>
+      <a href="hire.html">Hire me</a>
     </nav>
     <a class="btn top" href="#how">Get started, free</a>
   </div>
@@ -173,11 +176,14 @@
         <a class="btn" href="#family">Meet the Family Agent</a>
         <a class="btn outline" href="#individual">Meet the Individual Agent</a>
       </div>
+      <div class="facts-row">
+        <span>Available right now, free.</span>
+        <span>Private by design, your data stays home.</span>
+        <span>An assistant, not a companion.</span>
+      </div>
     </div>
-    <div class="fact">
-      <p>Available right now, free.</p>
-      <p>Private by design, your data stays home.</p>
-      <p>An assistant, not a companion.</p>
+    <div class="hero-art">
+      <img src="assets/hero-family.png" alt="A family on the couch, sketched: a younger child on a tablet, an older kid on a phone, the parents with them, everyone looking forward, the dog asleep on the floor.">
     </div>
   </div>
 </section>
@@ -341,6 +347,8 @@
       <a href="https://github.com/boktoday/neurofamily-hermes-agent" target="_blank" rel="noopener">The Family Agent, on GitHub</a>
       <a href="https://github.com/boktoday/neurodivergeagent-solo-hermes-agent" target="_blank" rel="noopener">The Individual Agent, on GitHub</a>
       <a href="https://github.com/boktoday/neurodivergeagent-website" target="_blank" rel="noopener">This site's repo</a>
+      <a href="hire.html">Hire me</a>
+      <a href="legal.html">Legal and privacy</a>
     </div>
     <div class="note">Not medical, legal or therapeutic advice. If you or someone in your family is in crisis, contact your local emergency number or crisis line. Built with love and Hermes Agent. Copyright 2026 Brendan O'Keefe. The agent profiles are free to download and free for noncommercial use, with credit.</div>
   </div>
