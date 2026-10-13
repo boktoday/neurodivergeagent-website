@@ -18,7 +18,7 @@ The showcase website for the NeuroDivergeAgent project. Static HTML served from 
 ## The two products
 
 1. **The Family Agent (NeuroFamily Support Ecosystem)** - twelve specialist support skills for families raising neurodiverse children. Free, private, local-first, runs on Hermes Agent. Lives at boktoday/neurofamily-hermes-agent.
-2. **The Individual Agent** - the same craft for one neurodivergent adult: routines, sensory life, work self-advocacy, burnout guardrails, life admin. In development. Will also be free.
+2. **The Individual Agent** - eleven specialist skills for one neurodivergent adult: routines, sensory life, work self-advocacy, burnout guardrails, life admin. Available now, also free. Repo: https://github.com/boktoday/neurodivergeagent-solo-hermes-agent
 
 ## Deploy
 

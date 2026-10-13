@@ -5,7 +5,7 @@
 ## Products
 
 - The Family Agent (available now, free): twelve specialist support skills for families raising neurodiverse children. Runs on Hermes Agent, private and local-first. Repo: https://github.com/boktoday/neurofamily-hermes-agent
-- The Individual Agent (in development, will be free): a support team for one neurodivergent adult: routines, sensory life, work self-advocacy, burnout guardrails, life admin.
+- The Individual Agent (available now, free): eleven specialist skills for one neurodivergent adult: routines, sensory life, work self-advocacy, burnout guardrails, life admin. Repo: https://github.com/boktoday/neurodivergeagent-solo-hermes-agent
 
 ## Key pages
 
