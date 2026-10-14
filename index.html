@@ -60,7 +60,7 @@
 
   .stats { background: var(--mustard); }
   .stats .in { display: grid; grid-template-columns: repeat(4, 1fr); }
-  .stat { padding: 24px 22px; border-right: 1px solid var(--ink); }
+  .stat { padding: 24px 22px; border-right: 1px solid var(--ink); min-width: 0; }
   .stat:last-child { border-right: 0; }
   .stat .n { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 1.55rem; letter-spacing: -0.02em; }
   .stat .l { font-size: 0.82rem; margin-top: 2px; opacity: 0.85; }
@@ -138,6 +138,9 @@
   footer a { color: var(--paper); text-decoration: none; border-bottom: 2px solid var(--mustard); margin-right: 18px; }
   footer .note { max-width: 54ch; font-size: 0.8rem; opacity: 0.8; }
 
+  .burger { display: none; background: none; border: 0; padding: 10px 6px; cursor: pointer; }
+  .burger span { display: block; width: 24px; height: 2.5px; background: var(--paper); margin: 4.5px 0; transition: transform .18s ease, opacity .18s ease; }
+  .navcollapse { display: contents; }
   @media (max-width: 980px) {
     .hero { background: var(--paper); }
     .hero .in { grid-template-columns: 1fr; padding: 64px 0 56px; }
@@ -148,9 +151,25 @@
     .stats .in { grid-template-columns: 1fr 1fr; }
     .stat { border-right: 0; border-bottom: 1px solid var(--ink); }
     .steps, .prin-grid, .connect .grid { grid-template-columns: 1fr; }
-    nav.links { display: none; }
+    .burger { display: block; }
+    .navcollapse { display: none; width: 100%; order: 5; padding-bottom: 6px; }
+    .navcollapse.open { display: block; }
+    nav.links { display: flex; flex-direction: column; gap: 0; width: 100%; }
+    nav.links a { font-size: 0.95rem; opacity: 1; padding: 13px 2px; border-top: 1px solid rgba(247,242,231,0.16); }
+    .btn.top { display: block; width: 100%; text-align: center; margin: 12px 0 4px; }
+    .nav.open .burger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav.open .burger span:nth-child(2) { opacity: 0; }
+    .nav.open .burger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
   }
-  @media (max-width: 560px) { .wrap { padding: 0 20px; } }
+  @media (max-width: 560px) {
+    .wrap { padding: 0 20px; }
+    .hero .in { padding: 52px 0 44px; }
+    .field { padding: 42px 20px; }
+    .stat { padding: 20px 16px; }
+  }
+  @media (min-width: 1700px) {
+    .hero { background: linear-gradient(90deg, rgba(247,242,231,0.92) 0%, rgba(247,242,231,0.74) 30%, rgba(247,242,231,0.28) 55%, rgba(247,242,231,0) 72%), url("assets/hero-family-photo.jpg") right center / auto 100% no-repeat var(--paper); }
+  }
 </style>
 </head>
 <body>
@@ -158,14 +177,17 @@
 <header>
   <div class="wrap nav">
     <a class="wordmark" href="#top">NEURO<b>DIVERGE</b>AGENT</a>
-    <nav class="links">
-      <a href="#family">Family Agent</a>
-      <a href="#individual">Individual Agent</a>
-      <a href="#how">How it works</a>
-      <a href="#connect">Contact</a>
-      <a href="hire.html">Hire me</a>
-    </nav>
-    <a class="btn top" href="#how">Get started, it's free</a>
+    <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navcollapse"><span></span><span></span><span></span></button>
+    <div class="navcollapse" id="navcollapse">
+      <nav class="links">
+        <a href="#family">Family Agent</a>
+        <a href="#individual">Individual Agent</a>
+        <a href="#how">How it works</a>
+        <a href="#connect">Contact</a>
+        <a href="hire.html">Hire me</a>
+      </nav>
+      <a class="btn top" href="#how">Get started, it's free</a>
+    </div>
   </div>
 </header>
 
@@ -401,6 +423,22 @@
     function (d) { return "Name: " + (d.name || "") + "\nEmail: " + (d.email || "") + "\n\n" + (d.message || ""); });
   wire("newsletter-form", "newsletter-status", "newsletter", "Subscribe to NeuroDivergeAgent updates",
     function (d) { return "Please add me to the NeuroDivergeAgent update list.\n\nName: " + (d.first_name || "") + "\nEmail: " + (d.email || ""); });
+})();
+</script>
+<script>
+(function(){
+  var nav = document.querySelector('.nav'); if (!nav) return;
+  var b = nav.querySelector('.burger'), c = nav.querySelector('.navcollapse'); if (!b || !c) return;
+  b.addEventListener('click', function(){
+    var open = c.classList.toggle('open');
+    nav.classList.toggle('open', open);
+    b.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  c.addEventListener('click', function(e){
+    if (e.target.closest('a') && c.classList.contains('open')) {
+      c.classList.remove('open'); nav.classList.remove('open'); b.setAttribute('aria-expanded', 'false');
+    }
+  });
 })();
 </script>
 </body>

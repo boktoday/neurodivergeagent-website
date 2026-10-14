@@ -48,20 +48,35 @@
   footer .in { display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap; padding:30px 0 42px; font-size:0.86rem; }
   footer a { color:var(--paper); text-decoration:none; border-bottom:2px solid var(--mustard); margin-right:16px; }
   footer .note2 { max-width:52ch; font-size:.78rem; opacity:.8; }
-  @media (max-width:980px) { nav.links { display:none; } }
-  @media (max-width:560px) { .wrap { padding:0 20px; } }
+  .burger { display: none; background: none; border: 0; padding: 10px 6px; cursor: pointer; }
+  .burger span { display: block; width: 24px; height: 2.5px; background: var(--paper); margin: 4.5px 0; transition: transform .18s ease, opacity .18s ease; }
+  .navcollapse { display: contents; }
+  @media (max-width:980px) {
+    .burger { display: block; }
+    .navcollapse { display: none; width: 100%; order: 5; padding-bottom: 6px; }
+    .navcollapse.open { display: block; }
+    nav.links { display: flex; flex-direction: column; gap: 0; width: 100%; }
+    nav.links a { font-size: 0.95rem; opacity: 1; padding: 13px 2px; border-top: 1px solid rgba(247,242,231,0.16); }
+    .nav.open .burger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav.open .burger span:nth-child(2) { opacity: 0; }
+    .nav.open .burger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  }
+  @media (max-width:560px) { .wrap { padding:0 20px; } header .nav { padding-left:20px; padding-right:20px; } }
 </style>
 </head>
 <body>
 <header>
   <div class="nav">
     <a class="wordmark" href="index.html">NEURO<b>DIVERGE</b>AGENT</a>
-    <nav class="links">
-      <a href="index.html">Home</a>
-      <a href="index.html#family">Family Agent</a>
-      <a href="index.html#individual">Individual Agent</a>
-      <a href="hire.html" class="here">Hire me</a>
-    </nav>
+    <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navcollapse"><span></span><span></span><span></span></button>
+    <div class="navcollapse" id="navcollapse">
+      <nav class="links">
+        <a href="index.html">Home</a>
+        <a href="index.html#family">Family Agent</a>
+        <a href="index.html#individual">Individual Agent</a>
+        <a href="hire.html" class="here">Hire me</a>
+      </nav>
+    </div>
   </div>
 </header>
 
@@ -175,5 +190,21 @@
     <div class="note2">Not medical, legal or therapeutic advice. Free for families and individuals, with credit. Copyright 2026 Brendan O'Keefe.</div>
   </div>
 </footer>
+<script>
+(function(){
+  var nav = document.querySelector('.nav'); if (!nav) return;
+  var b = nav.querySelector('.burger'), c = nav.querySelector('.navcollapse'); if (!b || !c) return;
+  b.addEventListener('click', function(){
+    var open = c.classList.toggle('open');
+    nav.classList.toggle('open', open);
+    b.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  c.addEventListener('click', function(e){
+    if (e.target.closest('a') && c.classList.contains('open')) {
+      c.classList.remove('open'); nav.classList.remove('open'); b.setAttribute('aria-expanded', 'false');
+    }
+  });
+})();
+</script>
 </body>
 </html>
