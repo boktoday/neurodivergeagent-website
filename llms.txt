@@ -4,18 +4,33 @@
 
 ## Products
 
-- The Family Agent (available now, free): twelve specialist support skills for families raising neurodiverse children. Runs on Hermes Agent, private and local-first. Repo: https://github.com/boktoday/neurofamily-hermes-agent
-- The Individual Agent (available now, free): eleven specialist skills for one neurodivergent adult: routines, sensory life, work self-advocacy, burnout guardrails, life admin. Repo: https://github.com/boktoday/neurodivergeagent-solo-hermes-agent
+- **The Family Agent** (available now, free): sixteen specialist skills for families raising neurodiverse children - fifteen specialists with the Family Navigator as the front door. One shared family folder, scheduled check-ins, a printable Morning Edition, and an NDIS guide that answers from a local library of current official documents. Runs on Hermes Agent, private and local-first. Repo: https://github.com/boktoday/neurofamily-hermes-agent
+- **The Individual Agent** (available now, free): twelve specialist skills for one neurodivergent adult: routines, sensory life, work self-advocacy, burnout guardrails, life admin. Repo: https://github.com/boktoday/neurodivergeagent-solo-hermes-agent
+- **Workbook Guide for Windows and Mac** (coming soon, not yet on sale): a digital, printable A4 companion - one page per task and per feature, with fill-in worksheets, screenshot frames beside each step, and the privacy conventions written out.
+
+## Setup
+
+One command. `python scripts/quickstart.py` checks Python and Hermes, copies the skills into a profile, builds the family folder with its private rooms, and asks two questions: which model (cloud, or local via Ollama or LM Studio which it can detect), and how you want to talk to it (terminal or Telegram). About three minutes. `--dry-run` shows what it would do without changing anything; `--update` refreshes an install while keeping files the family edited.
+
+## Privacy
+
+Local-first, and the guarantees are enforced in code rather than promised:
+
+- **De-identification gate** before onboarding asks about a person, and before any school, medical or NDIS document is read. An unanswered question means de-identified.
+- **Private partitions**: `private-parent/` and `private-yp/` hold carer and young-person notes. The Morning Edition builder refuses at the code level to read them, so private notes cannot reach the printed family paper.
+- **Local redaction** (`scripts/redact_doc.py`): NDIS participant numbers, Medicare numbers, Centrelink CRNs, labelled dates of birth, email, Australian phone numbers, street addresses and postcodes, and supplied names are stripped on the user's own machine before a document is attached to a hosted model.
+- **Zero data retention** instructions for each model provider, and a fully local option for families who want nothing to leave the house.
 
 ## Key pages
 
 - Website: https://neurodivergeagent.com
 - Family Agent install guide: https://github.com/boktoday/neurofamily-hermes-agent/blob/main/INSTALL.md
+- Family Agent advanced setup (providers, local models, schedules, WhatsApp): https://github.com/boktoday/neurofamily-hermes-agent/blob/main/docs/advanced-setup.md
 - Family Agent design document: https://github.com/boktoday/neurofamily-hermes-agent/blob/main/docs/ecosystem-complete.md
 
 ## Principles
 
-Neurodiversity-affirming, strengths-based, trauma-informed, private and local, free forever. An assistant, not a companion. Never therapy or diagnosis; crises route to humans.
+Neurodiversity-affirming, strengths-based, trauma-informed, private and local, free forever. An assistant, not a companion. Never therapy or diagnosis; crises route to humans and to verified local crisis lines.
 
 ## Contact
 
