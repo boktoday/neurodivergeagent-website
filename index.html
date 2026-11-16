@@ -279,8 +279,9 @@
       <div class="wb-copy">
         <div class="kicker">Coming soon</div>
         <h2>Workbook Guide for Windows and Mac</h2>
-        <p class="sub">A companion you can hold. One page per task, one page per feature: fill-in worksheets, screenshot frames beside each step, the privacy conventions written out so you can keep them, and the weekly rhythm laid flat on a single page. Digital download, A4, printable or readable on screen.</p>
-        <p class="sub" style="margin-bottom:0;">Not on sale yet. If you would like to know when it is, say hello below and ask to be told.</p>
+        <p class="wb-meta"><b>31 pages</b> A4 PDF, printable <span class="wb-price">$14.99 USD</span></p>
+        <p class="sub">A companion you can hold. One page per task, one page per feature: fill-in worksheets, screenshot frames beside each step, the privacy conventions written out so you can keep them, and the weekly rhythm laid flat on a single page. Digital download, printable or readable on screen.</p>
+        <p class="sub" style="margin-bottom:0;">Not on sale yet. Say hello below if you would like to know the day it is.</p>
       </div>
       <div class="wb-art">
         <img src="assets/workbook-mock.png" alt="Three pages from the workbook fanned out: the cover, the page on de-identifying before you attach a document, and the page on running a local model." width="1400" height="1150" loading="lazy">
@@ -292,6 +293,9 @@
   .wb-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
   .wb-copy .kicker { margin-bottom: 16px; }
   .wb-copy h2 { font-size: 1.62rem; }
+  .wb-meta { font-family: "Space Grotesk", sans-serif; font-size: 0.8rem; letter-spacing: 0.07em; text-transform: uppercase; color: #5f5b53; margin: 12px 0 18px; display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+  .wb-meta b { color: var(--ink); font-weight: 700; }
+  .wb-price { background: var(--ink); color: var(--paper); padding: 4px 10px; font-weight: 700; letter-spacing: 0.04em; }
   .wb-art img { display: block; width: 100%; height: auto; }
   @media (max-width: 980px) {
     .wb-grid { grid-template-columns: 1fr; gap: 30px; }
