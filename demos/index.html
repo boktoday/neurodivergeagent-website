@@ -51,6 +51,10 @@
     letter-spacing: -.01em; }
   .card p { font-size: .94rem; color: #4a463f; margin: 0 0 18px; }
   .go { margin-top: auto; font-weight: 700; font-size: .92rem; color: var(--deep-terra); }
+  .card.cta { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .card.cta h2 { color: var(--paper); }
+  .card.cta p { color: #d5cfc5; }
+  .card.cta .go { color: var(--terra); }
   .go::after { content: " \2192"; }
 
   .note { background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--terra);
@@ -91,8 +95,8 @@
 <main class="wrap">
   <div class="hero">
     <div class="kicker">Try before you install</div>
-    <h1>Four things the agent actually makes.</h1>
-    <p class="lede">No Python, no setup, no account. These are real artifacts from the Family Agent, filled with a made-up nine year old called Leo so you can see the shape of the output before deciding anything.</p>
+    <h1>Seven things the agents actually make.</h1>
+    <p class="lede">No Python, no setup, no account. These are the real artifacts, filled with fictional data so you can see the shape of the output in about a minute. Six come from the Family Agent, with a made-up nine year old called Leo. The last one is for the adult whose week is already too full.</p>
   </div>
 
   <div class="grid">
@@ -118,6 +122,20 @@
       <span class="go">See the breakdown</span>
     </a>
 
+    <a class="card" href="communication-passport.html">
+      <span class="tag">Speech and AAC</span>
+      <h2>Communication passport</h2>
+      <p>In the young person's own words: how I communicate best, what low battery looks like, what helps, and what never to do in shutdown. One page, two outputs: a sheet for teachers and a lock-screen card for the moments speech goes.</p>
+      <span class="go">Open the passport</span>
+    </a>
+
+    <a class="card" href="sensory-weather-map.html">
+      <span class="tag">For the OT</span>
+      <h2>Sensory weather map</h2>
+      <p>All eight systems including interoception, each with a load slider and a seeks, mixed or avoids toggle, then what drains against what recharges at home, school and outings. Prints to one page.</p>
+      <span class="go">Open the map</span>
+    </a>
+
     <a class="card" href="morning-edition.html">
       <span class="tag">Printed A4</span>
       <h2>The Morning Edition</h2>
@@ -125,11 +143,25 @@
       <span class="go">Read today's sheet</span>
     </a>
 
+    <a class="card" href="spoon-collision-radar.html">
+      <span class="tag">For adults</span>
+      <h2>Spoon collision radar</h2>
+      <p>A calendar shows overlapping times. This shows overlapping nervous systems: score each event on masking, sensory and executive load, and get flagged days before the 48-hour pile-up that would end in a crash.</p>
+      <span class="go">Open the radar</span>
+    </a>
+
+    <a class="card cta" href="https://github.com/boktoday/neurofamily-hermes-agent" target="_blank" rel="noopener">
+      <span class="tag">Free</span>
+      <h2>Both agents, on GitHub</h2>
+      <p>Seventeen specialists for the family, fourteen for one adult. Free for individuals, families, schools and non-profits. About three minutes to install.</p>
+      <span class="go">Get the Family Agent</span>
+    </a>
+
   </div>
 
   <div class="note">
     <h2>What is and is not happening here</h2>
-    <p>Leo is invented. Every name, goal, food and appointment on these pages is synthetic, written to show the format rather than to describe a real child. These pages load no trackers and make no network calls once open. Your own version runs entirely on your own device, using your own model, and your family's folder never leaves it unless you send it somewhere yourself.</p>
+    <p>Leo is invented, and so is the adult in the last demo. Every name, goal, food, appointment and score on these pages is synthetic, written to show the format rather than to describe a real person. These pages load no trackers and make no network calls once open. Your own version runs entirely on your own device, using your own model, and your family's folder never leaves it unless you send it somewhere yourself.</p>
   </div>
 
   <div class="cta-row">
