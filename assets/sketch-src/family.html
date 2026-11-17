@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f7f2e7; --card:#ffffff; --ink:#14110d;
+    --sage:#b7c6a6; --rose:#eab7bc; --blue:#9fb6c2; --terra:#e3a468; --terra-d:#d08b4e; --mustard:#e9bc4a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:2560px;height:1440px}
+  body{background:var(--paper);color:var(--ink);font-family:"Inter",system-ui,sans-serif;position:relative;overflow:hidden}
+  .g{font-family:"Inter",sans-serif}
+
+  .box{position:absolute;background:var(--card);border:3px solid var(--ink);padding:26px 24px}
+  .box.plain{background:var(--paper)}
+  .tab{position:absolute;top:-22px;left:22px;border:3px solid var(--ink);padding:4px 14px;
+       font-weight:700;font-size:20px;letter-spacing:.09em;text-transform:uppercase;background:#fff}
+  .tab.sage{background:var(--sage)} .tab.rose{background:var(--rose)}
+  .tab.blue{background:var(--blue)} .tab.terra{background:var(--terra)} .tab.mustard{background:var(--mustard)}
+
+  h1{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:66px;line-height:.98;letter-spacing:-.02em;text-transform:uppercase}
+  .sub{font-weight:700;font-size:20px;letter-spacing:.05em;text-transform:uppercase;margin-top:16px}
+  .count{font-size:22px;margin-top:12px;color:#3a352e}
+
+  .item{margin-bottom:22px}
+  .item:last-child{margin-bottom:0}
+  .item b{display:block;font-size:25px;font-weight:700;letter-spacing:.01em;text-transform:uppercase;line-height:1.12}
+  .item span{display:block;font-size:19px;line-height:1.35;color:#2b2721;margin-top:3px}
+
+  .mid{text-align:center}
+  .mid b{display:block;font-size:32px;font-weight:700;letter-spacing:.01em;text-transform:uppercase}
+  .mid p{font-size:20px;line-height:1.45;margin-top:8px;color:#2b2721}
+
+  .nav{position:absolute;background:var(--mustard);border:3px solid var(--ink);padding:26px 28px;text-align:center}
+  .nav b{display:block;font-size:31px;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
+  .nav p{font-size:20px;line-height:1.45;margin-top:10px}
+
+  .arrows{position:absolute;font-size:20px;line-height:1.55;color:#2b2721}
+  .arrows div{margin-bottom:9px;padding-left:26px;text-indent:-26px}
+
+  .key{position:absolute;border:3px dashed var(--ink);padding:18px 20px;background:var(--paper)}
+  .key h4{font-size:22px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+  .key div{font-size:18px;line-height:1.5;margin-bottom:5px;padding-left:22px;text-indent:-22px}
+
+  .band{position:absolute;border:3px solid var(--ink);background:var(--paper);padding:18px 22px 20px}
+  .band .tab{top:-22px;left:18px;background:var(--mustard)}
+  .pills{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
+  .pill{border:3px solid var(--ink);padding:6px 16px;font-size:19px;font-weight:700;background:#fff}
+  .pill.a{background:var(--sage)} .pill.b{background:var(--rose)} .pill.c{background:#c9d3d8}
+  .pill.d{background:#dfe6ea} .pill.e{background:var(--mustard)} .pill.f{background:#fff}
+
+  .star{position:absolute;font-size:34px;font-weight:700;user-select:none}
+  .foot{position:absolute;right:48px;bottom:26px;font-size:18px;color:#7a746a}
+</style>
+</head>
+<body>
+
+<!-- title -->
+<div class="box" style="left:48px;top:36px;width:956px;height:268px;display:flex;flex-direction:column;justify-content:center">
+  <h1>NeuroFamily support<br>ecosystem</h1>
+  <div class="sub">Family Agent &middot; the Hermes edition</div>
+  <div class="count">17 specialists + Navigator &middot; one shared family picture &middot; free for families</div>
+</div>
+
+<!-- core support team -->
+<div class="box" style="left:48px;top:344px;width:480px;height:372px">
+  <div class="tab sage">Core support team</div>
+  <div class="item"><b>Emotional Coach</b><span>meltdowns, anxiety, emotional regulation</span></div>
+  <div class="item"><b>Sensory Guide</b><span>sensory diets, environment, textures, OT</span></div>
+  <div class="item"><b>Communication Specialist</b><span>AAC, social scripts, language support</span></div>
+  <div class="item"><b>Healthcare Passport</b><span>dentist, blood test, hospital and haircut prep</span></div>
+</div>
+
+<!-- specialised coaches -->
+<div class="box" style="left:48px;top:788px;width:480px;height:328px">
+  <div class="tab rose">Specialised coaches</div>
+  <div class="item"><b>Young Person Coach</b><span>independence, identity, future planning</span></div>
+  <div class="item"><b>Food Support</b><span>ARFID, safe foods, food diaries, feeding</span></div>
+  <div class="item"><b>Sibling Support</b><span>sibling needs, family dynamics</span></div>
+  <div class="item"><b>Village Aligner</b><span>grandparents, coaches, sitters, co-parents</span></div>
+</div>
+
+<!-- neurofamily heading box -->
+<div class="box mid" style="left:1036px;top:36px;width:480px;height:296px;display:flex;flex-direction:column;justify-content:center">
+  <b>NeuroFamily &#9829;</b>
+  <p>for families with neurodiverse<br>children. Strengths-based.<br>Trauma-informed. Never a cure,<br>always support.</p>
+</div>
+
+<!-- the navigator -->
+<div class="nav" style="left:1044px;top:396px;width:552px;height:250px;display:flex;flex-direction:column;justify-content:center">
+  <b>&#10022; Family Navigator</b>
+  <p>the front door: learns your family,<br>routes every need, holds the big picture.<br>Warm and practical.</p>
+</div>
+
+<!-- arrows -->
+<div class="arrows" style="left:1044px;top:690px;width:540px">
+  <div>&rarr; one shared family folder: every specialist knows the story</div>
+  <div>&rarr; check-ins that respect real life: morning anchors, weekly review, carer wellbeing</div>
+  <div>&rarr; one word lowers the load: send &#128308; and the team goes quiet</div>
+  <div>&rarr; WhatsApp family group, voice notes both ways, always with a summary</div>
+  <div>&rarr; three unanswered check-ins and the team stops nudging. Send &ldquo;reset&rdquo;</div>
+</div>
+
+<!-- tools -->
+<div class="box" style="left:1596px;top:44px;width:444px;height:320px">
+  <div class="tab blue">Tools</div>
+  <div class="item"><b>Parent Companion</b><span>carer burnout, respite, grief, wellbeing</span></div>
+  <div class="item"><b>Artifacts Generator</b><span>visual tools, trackers, passports, mini-apps</span></div>
+  <div class="item"><b>Morning Edition</b><span>the printed A4 the kitchen table runs on</span></div>
+</div>
+
+<!-- family coordination -->
+<div class="box" style="left:2064px;top:44px;width:448px;height:386px">
+  <div class="tab terra">Family coordination</div>
+  <div class="item"><b>Education Advocate</b><span>IEPs, EHCPs, 504s, school rights, letters</span></div>
+  <div class="item"><b>Behaviour Advisor</b><span>PBS, behaviour patterns, triggers, plans</span></div>
+  <div class="item"><b>Routine Architect</b><span>visual schedules, transitions, executive function</span></div>
+</div>
+
+<!-- safety and local help -->
+<div class="box" style="left:1596px;top:416px;width:444px;height:404px">
+  <div class="tab terra">Safety and local help</div>
+  <div class="item"><b>Hard Moments</b><span>crisis moments, safety, hand-off to real people</span></div>
+  <div class="item"><b>Local Support</b><span>verified helplines and services by country</span></div>
+  <div class="item"><b>NDIS Guide</b><span>access, plans, budgets, reviews (AU)</span></div>
+</div>
+
+<!-- key -->
+<div class="key" style="left:2064px;top:470px;width:448px;height:350px">
+  <h4>Key</h4>
+  <div>&#10003; neurodiversity-affirming, strengths-based, trauma-informed</div>
+  <div>&#10003; private and local; free models or fully offline</div>
+  <div>&#10003; schedules respect real family life; every check-in pausable</div>
+  <div>&#10003; built for <b>Hermes Agent</b> (not OpenClaw)</div>
+  <div>&#10003; one character lowers the whole team&rsquo;s volume</div>
+  <div>&#10003; free for families, with credit</div>
+</div>
+
+<!-- bottom band -->
+<div class="band" style="left:64px;top:1156px;width:2432px;height:120px">
+  <div class="tab mustard">And in the Hermes edition:</div>
+  <div class="pills">
+    <div class="pill a">WhatsApp family group</div>
+    <div class="pill b">7 reality-proof schedules</div>
+    <div class="pill c">Food diary, IEP companion, sensory weather map</div>
+    <div class="pill d">Google + Microsoft calendar &amp; mail (optional)</div>
+    <div class="pill e">free models or 100% local</div>
+    <div class="pill f">not therapy, ever &mdash; crises go to humans</div>
+  </div>
+</div>
+
+<div class="star" style="left:1000px;top:150px">&#10033;</div>
+<div class="star" style="left:1004px;top:380px">&#10033;</div>
+<div class="star" style="left:1004px;top:660px">&#10033;</div>
+<div class="star" style="left:1592px;top:390px">&#10033;</div>
+<div class="star" style="left:1600px;top:880px">&#10033;</div>
+
+<div class="foot">boktoday/neurofamily-hermes-agent &nbsp;&bull;&nbsp; v2.4.0 &nbsp;&bull;&nbsp; neurodivergeagent.com</div>
+
+</body>
+</html>
