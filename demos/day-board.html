@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day Board</title>
+<style>
+  :root { --paper: #f7f2e7; --paper-2: #fdfaf2; --ink: #2e2c29; --ink-soft: #5b5750; --line: #e2dacb;
+          --terra: #e3a468; --terra-deep: #c47a3a; --sage: #b7c6a6; --sage-deep: #6f8f5f;
+          --blue: #9fb6c2; --blue-deep: #6e93a6; --rose: #eab7bc; --mustard: #e9bc4a; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: var(--paper); color: var(--ink); padding: 16px; line-height: 1.5; }
+  .wrap { max-width: 720px; margin: 0 auto; }
+  h1 { font-size: 1.5rem; margin-bottom: 2px; }
+  .sub { color: var(--ink-soft); font-size: 0.88rem; margin-bottom: 14px; }
+  .datebar { display: flex; gap: 10px; align-items: center; margin-bottom: 14px; flex-wrap: wrap; }
+  .datebar input[type=date] { font: inherit; padding: 8px 10px; border: 1.5px solid var(--ink); background: #fff; }
+  section { background: #fff; border: 1.5px solid var(--ink); padding: 14px; margin-bottom: 12px; }
+  h2 { font-size: 0.95rem; margin-bottom: 8px; letter-spacing: 0.02em; }
+  .taskrow { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+  .taskrow input[type=text] { flex: 1; font: inherit; padding: 9px 10px; border: 1.5px solid var(--line); background: #fff; }
+  .taskrow input[type=checkbox] { width: 22px; height: 22px; accent-color: var(--sage-deep); }
+  .medrow { display: flex; gap: 8px; align-items: center; margin-bottom: 6px; font-size: 0.92rem; }
+  .medrow input[type=checkbox] { width: 20px; height: 20px; accent-color: var(--terra-deep); }
+  .medrow input[type=text] { flex: 1; font: inherit; padding: 6px 8px; border: 1px solid var(--line); background: #fff; }
+  .energy { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .energy input[type=range] { flex: 1; min-width: 200px; accent-color: var(--blue-deep); }
+  .energy .val { font-weight: 700; font-size: 1.15rem; min-width: 2.2rem; text-align: center; }
+  .meals { display: flex; gap: 14px; flex-wrap: wrap; font-size: 0.92rem; }
+  .meals label { display: flex; gap: 6px; align-items: center; }
+  .meals input { width: 20px; height: 20px; accent-color: var(--sage-deep); }
+  .wins input, .notes textarea { width: 100%; font: inherit; padding: 8px 10px; border: 1.5px solid var(--line); margin-bottom: 6px; background: #fff; }
+  .notes textarea { min-height: 70px; resize: vertical; }
+  button { font: inherit; padding: 10px 16px; border: 1.5px solid var(--ink); background: var(--mustard); cursor: pointer; }
+  button.ghost { background: #fff; }
+  .toolbar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .status { font-size: 0.85rem; color: var(--sage-deep); font-weight: 600; min-height: 1.2em; margin-top: 6px; }
+  .foot { color: var(--ink-soft); font-size: 0.78rem; margin-top: 10px; }
+  @media print { .toolbar, button, .noprint { display: none; } body { background: #fff; padding: 0; } section { border-color: #999; } }
+</style>
+</head>
+<body>
+<div id="nf-demo-banner" role="note" style="font:600 13px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#16120d;color:#f7f2e7;padding:10px 16px;text-align:center;letter-spacing:.01em;">
+  Interactive demo, fictional data. Generated locally by the NeuroDivergeAgent and kept on your own device when installed.
+</div>
+<script>/* demo seed: fictional data, demo-only key */
+(function () {
+  function today() { var d = new Date(); return d.toISOString().slice(0, 10); }
+  var state = {
+    meds: ["Morning meds", "Evening meds"],
+    days: {}
+  };
+  state.days[today()] = {
+    tasks: [
+      { text: "Fill the repeat script", done: true },
+      { text: "Reply to the one email that actually matters", done: false },
+      { text: "Walk to the corner and back", done: false }
+    ],
+    meds: [true, false],
+    energy: 4,
+    meals: [true, true, false, false],
+    wins: ["Got up before noon", "Sent one email", ""],
+    notes: "Low day. Did the two smallest things and stopped there. That counts as a full day."
+  };
+  try { localStorage.setItem("nf-demo-dayboard-v1", JSON.stringify(state)); } catch (e) {}
+})();
+</script>
+
+<div class="wrap">
+  <h1>Day Board</h1>
+  <div class="sub">One screen to hold the day. Saves in this browser only. Print it if paper works better; export if you need the history.</div>
+
+  <div class="datebar noprint">
+    <label for="date" style="font-size:0.85rem;">Day:</label>
+    <input type="date" id="date">
+    <button class="ghost" onclick="loadDate()">Load</button>
+    <button class="ghost" onclick="window.print()">Print</button>
+    <button class="ghost" onclick="exportCsv()">Export CSV</button>
+  </div>
+
+  <section>
+    <h2>Today's three</h2>
+    <div class="taskrow"><input type="checkbox" id="t1c"><input type="text" id="t1" placeholder="the one that would make today feel like a win"></div>
+    <div class="taskrow"><input type="checkbox" id="t2c"><input type="text" id="t2" placeholder="second thing"></div>
+    <div class="taskrow"><input type="checkbox" id="t3c"><input type="text" id="t3" placeholder="third thing, optional"></div>
+    <div class="foot">Three is the ceiling. Everything else lives somewhere else.</div>
+  </section>
+
+  <section>
+    <h2>Meds</h2>
+    <div id="meds"></div>
+    <div class="foot noprint">Edit names once; they stay for every day.</div>
+  </section>
+
+  <section>
+    <h2>Energy</h2>
+    <div class="energy">
+      <input type="range" id="energy" min="1" max="10" value="5" oninput="document.getElementById('energyVal').textContent=this.value">
+      <span class="val" id="energyVal">5</span>
+    </div>
+    <div class="foot">1 is running on fumes, 10 is fully charged. Honest numbers help tomorrow.</div>
+  </section>
+
+  <section>
+    <h2>Meals</h2>
+    <div class="meals">
+      <label><input type="checkbox" id="m1"> Breakfast</label>
+      <label><input type="checkbox" id="m2"> Lunch</label>
+      <label><input type="checkbox" id="m3"> Dinner</label>
+      <label><input type="checkbox" id="m4"> Snacks / drinks okay</label>
+    </div>
+  </section>
+
+  <section>
+    <h2>Wins</h2>
+    <div class="wins">
+      <input type="text" id="w1" placeholder="win 1 (small counts)">
+      <input type="text" id="w2" placeholder="win 2">
+      <input type="text" id="w3" placeholder="win 3">
+    </div>
+  </section>
+
+  <section>
+    <h2>Notes</h2>
+    <textarea class="notes" id="notes" placeholder="anything worth remembering about today"></textarea>
+  </section>
+
+  <div class="status" id="status"></div>
+  <div class="foot noprint">Part of the Individual Agent. Local only: nothing leaves this browser.</div>
+</div>
+
+<script>
+var KEY = "nf-demo-dayboard-v1";
+var data = { meds: ["Medication 1", "Medication 2"], days: {} };
+
+function today() { return new Date().toISOString().slice(0, 10); }
+
+function load() {
+  try { var raw = localStorage.getItem(KEY); if (raw) data = JSON.parse(raw); } catch (e) {}
+  if (!data.meds || data.meds.length === 0) data.meds = ["Medication 1", "Medication 2"];
+  if (!data.days) data.days = {};
+  document.getElementById("date").value = today();
+  renderMeds();
+  loadDate();
+}
+
+function persist() { try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (e) {} }
+
+function renderMeds() {
+  var box = document.getElementById("meds");
+  var html = "";
+  for (var i = 0; i < data.meds.length; i++) {
+    html += "<div class='medrow'><input type='checkbox' id='medc" + i + "' onchange='save()'><input type='text' id='med" + i + "' value=\"" + esc(data.meds[i]) + "\" onchange='renameMed(" + i + ")'></div>";
+  }
+  box.innerHTML = html;
+}
+
+function esc(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+
+function renameMed(i) {
+  data.meds[i] = document.getElementById("med" + i).value;
+  persist(); save();
+}
+
+function snapshot() {
+  var d = { tasks: [], meds: [], energy: document.getElementById("energy").value,
+            meals: [document.getElementById("m1").checked, document.getElementById("m2").checked,
+                    document.getElementById("m3").checked, document.getElementById("m4").checked],
+            wins: [document.getElementById("w1").value, document.getElementById("w2").value, document.getElementById("w3").value],
+            notes: document.getElementById("notes").value };
+  for (var i = 1; i <= 3; i++) {
+    d.tasks.push({ text: document.getElementById("t" + i).value, done: document.getElementById("t" + i + "c").checked });
+  }
+  for (var m = 0; m < data.meds.length; m++) {
+    d.meds.push(document.getElementById("medc" + m).checked);
+  }
+  return d;
+}
+
+function save() {
+  var date = document.getElementById("date").value || today();
+  data.days[date] = snapshot();
+  persist();
+  flash("Saved.");
+}
+
+function loadDate() {
+  var date = document.getElementById("date").value || today();
+  var d = data.days[date] || { tasks: [], meds: [], energy: 5, meals: [false, false, false, false], wins: ["", "", ""], notes: "" };
+  for (var i = 1; i <= 3; i++) {
+    var t = d.tasks[i - 1] || { text: "", done: false };
+    document.getElementById("t" + i).value = t.text || "";
+    document.getElementById("t" + i + "c").checked = !!t.done;
+  }
+  renderMeds();
+  for (var m = 0; m < data.meds.length; m++) {
+    document.getElementById("medc" + m).checked = !!(d.meds && d.meds[m]);
+  }
+  document.getElementById("energy").value = d.energy || 5;
+  document.getElementById("energyVal").textContent = d.energy || 5;
+  for (var k = 0; k < 4; k++) { document.getElementById("m" + (k + 1)).checked = !!(d.meals && d.meals[k]); }
+  var w = d.wins || ["", "", ""];
+  document.getElementById("w1").value = w[0] || ""; document.getElementById("w2").value = w[1] || ""; document.getElementById("w3").value = w[2] || "";
+  document.getElementById("notes").value = d.notes || "";
+  flash("");
+}
+
+function flash(msg) {
+  var s = document.getElementById("status");
+  s.textContent = msg;
+  if (msg) setTimeout(function () { s.textContent = ""; }, 1600);
+}
+
+function exportCsv() {
+  var rows = [["date", "task1", "done1", "task2", "done2", "task3", "done3", "energy", "breakfast", "lunch", "dinner", "snacks", "win1", "win2", "win3", "notes"]];
+  Object.keys(data.days).sort().forEach(function (date) {
+    var d = data.days[date];
+    var t = d.tasks || [];
+    function task(i) { return [(t[i] || {}).text || "", (t[i] || {}).done ? "y" : "n"]; }
+    var m = d.meals || [false, false, false, false];
+    var w = d.wins || ["", "", ""];
+    rows.push([date].concat(task(0), task(1), task(2), [d.energy || "", m[0] ? "y" : "n", m[1] ? "y" : "n", m[2] ? "y" : "n", m[3] ? "y" : "n"], w, [d.notes || ""]));
+  });
+  var csv = rows.map(function (r) { return r.map(function (c) { return '"' + String(c == null ? "" : c).replace(/"/g, '""') + '"'; }).join(","); }).join("\n");
+  var blob = new Blob([csv], { type: "text/csv" });
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "day-board.csv";
+  a.click();
+}
+
+["t1", "t1c", "t2", "t2c", "t3", "t3c", "energy", "m1", "m2", "m3", "m4", "w1", "w2", "w3", "notes"].forEach(function (id) {
+  document.addEventListener("change", function (ev) { if (ev.target && ev.target.id === id) save(); });
+});
+document.addEventListener("input", function (ev) { if (ev.target && ev.target.id === "notes") save(); });
+
+load();
+</script>
+</body>
+</html>
