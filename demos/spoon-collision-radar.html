@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spoon Collision Radar</title>
+<style>
+  :root { --paper: #f7f2e7; --paper-2: #fdfaf2; --ink: #2e2c29; --ink-soft: #5b5750; --line: #e2dacb;
+          --terra: #e3a468; --terra-deep: #c47a3a; --sage: #b7c6a6; --sage-deep: #6f8f5f;
+          --blue: #9fb6c2; --blue-deep: #6e93a6; --rose: #eab7bc; --rose-deep: #b46b74; --mustard: #e9bc4a; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: var(--paper); color: var(--ink); padding: 16px; line-height: 1.5; }
+  .wrap { max-width: 1120px; margin: 0 auto; }
+  h1 { font-size: 1.5rem; margin-bottom: 2px; }
+  .sub { color: var(--ink-soft); font-size: 0.88rem; margin-bottom: 14px; }
+  section { background: #fff; border: 1.5px solid var(--ink); padding: 14px; margin-bottom: 12px; }
+  h2 { font-size: 0.95rem; margin-bottom: 8px; letter-spacing: 0.02em; }
+  h3 { font-size: 0.85rem; margin-bottom: 6px; letter-spacing: 0.02em; }
+
+  button { font: inherit; padding: 9px 15px; border: 1.5px solid var(--ink); background: var(--mustard); cursor: pointer; }
+  button.ghost { background: #fff; }
+  button.small { padding: 4px 9px; font-size: 0.8rem; border-width: 1px; }
+  .toolbar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+
+  .setrow { display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-end; }
+  .setrow label { display: flex; flex-direction: column; gap: 4px; font-size: 0.82rem; color: var(--ink-soft); }
+  .setrow input { font: inherit; padding: 7px 9px; border: 1.5px solid var(--line); background: #fff; width: 11rem; }
+  .hint { font-size: 0.78rem; color: var(--ink-soft); margin-top: 6px; }
+
+  .addrow { display: grid; grid-template-columns: 8rem 1fr auto; gap: 10px; align-items: end; }
+  .addrow label { display: flex; flex-direction: column; gap: 4px; font-size: 0.82rem; color: var(--ink-soft); }
+  .addrow input[type=text], .addrow select { font: inherit; padding: 8px 10px; border: 1.5px solid var(--line); background: #fff; width: 100%; }
+  .sliders { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 12px; }
+  .sliders label { display: block; font-size: 0.8rem; color: var(--ink-soft); }
+  .sliders input[type=range] { width: 100%; accent-color: var(--terra-deep); }
+  .sliders .v { font-weight: 700; color: var(--ink); }
+  .kindbar { display: flex; gap: 8px; margin-bottom: 4px; }
+  .kindbar button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+
+  /* ---- collision banner ---- */
+  .radar { border: 2px solid var(--ink); background: var(--paper-2); padding: 14px; margin-bottom: 12px; }
+  .radar.clear { border-color: var(--sage-deep); }
+  .radar.hit { border-color: var(--rose-deep); background: #fdf4f5; }
+  .radar h2 { font-size: 1rem; margin-bottom: 8px; }
+  .radar .headline { font-weight: 700; font-size: 0.95rem; margin-bottom: 8px; }
+  .hit .headline { color: var(--rose-deep); }
+  .clear .headline { color: var(--sage-deep); }
+  .warn { border-left: 4px solid var(--rose-deep); padding: 6px 0 6px 10px; margin-bottom: 10px; }
+  .warn .when { font-weight: 700; }
+  .warn .why { font-size: 0.85rem; color: var(--ink-soft); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .chips button { background: #fff; font-size: 0.78rem; padding: 4px 9px; border: 1px solid var(--terra-deep); color: var(--terra-deep); }
+  .warn textarea { width: 100%; font: inherit; font-size: 0.85rem; padding: 7px 9px; border: 1px solid var(--line); background: #fff; min-height: 46px; margin-top: 6px; }
+
+  /* ---- week grid ---- */
+  .grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
+  .day { border: 1.5px solid var(--line); background: #fff; padding: 8px; min-height: 150px; display: flex; flex-direction: column; }
+  .day.flag { border: 2px solid var(--rose-deep); background: #fdf6f7; }
+  .day.near { border: 2px solid var(--terra-deep); }
+  .day .dh { font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); }
+  .day .dd { font-weight: 700; font-size: 0.95rem; margin-bottom: 4px; }
+  .day .total { font-size: 0.78rem; font-weight: 700; margin-bottom: 6px; }
+  .day .total.over { color: var(--rose-deep); }
+  .day .total.ok { color: var(--sage-deep); }
+  .item { font-size: 0.78rem; border-left: 3px solid var(--blue-deep); padding: 3px 0 3px 6px; margin-bottom: 5px; }
+  .item.recovery { border-left-color: var(--sage-deep); background: #f4f8f1; }
+  .item .lab { display: block; }
+  .item .sc { color: var(--ink-soft); font-size: 0.72rem; }
+  .item button { border: 0; background: transparent; color: var(--rose-deep); font-size: 0.85rem; padding: 0 2px; cursor: pointer; }
+  .day .empty { color: var(--line); font-size: 0.75rem; }
+
+  .foot { color: var(--ink-soft); font-size: 0.78rem; margin-top: 10px; }
+  .status { font-size: 0.85rem; color: var(--sage-deep); font-weight: 600; min-height: 1.2em; }
+
+  @page { size: A4 landscape; margin: 9mm; }
+  @media print {
+    body { background: #fff; padding: 0; font-size: 9pt; }
+    .toolbar, button, .noprint, #addForm, #settings { display: none !important; }
+    .hint, .foot, #printNote, .chips, .empty { display: none !important; }
+    section, .radar { border-color: #777; page-break-inside: avoid; }
+    section { padding: 6px 9px; margin-bottom: 5px; }
+    .radar { padding: 6px 9px; margin-bottom: 5px; }
+    h1 { font-size: 12pt; margin-bottom: 0; }
+    .sub { font-size: 7.5pt; margin-bottom: 6px; }
+    h2 { font-size: 8.5pt; margin-bottom: 3px; }
+    .radar .headline { font-size: 8.5pt; margin-bottom: 4px; }
+    .warn { padding: 3px 0 3px 8px; margin-bottom: 5px; }
+    .warn .when { font-size: 8pt; }
+    .warn .why { font-size: 7.5pt; }
+    .warn textarea { min-height: 22px; font-size: 7pt; padding: 3px 5px; margin-top: 3px; }
+    .grid { gap: 4px; }
+    .day { border-color: #999; min-height: 0; padding: 5px; }
+    .day.flag { border-color: #000; border-width: 2px; background: #fff; }
+    .day .dh { font-size: 6.5pt; }
+    .day .dd { font-size: 8.5pt; margin-bottom: 2px; }
+    .day .total { font-size: 7pt; margin-bottom: 3px; }
+    .item { font-size: 7pt; margin-bottom: 2px; padding: 2px 0 2px 5px; }
+    .item .sc { font-size: 6.5pt; }
+    .item button { display: none; }
+    .radar.hit { background: #fff; border-color: #000; }
+    .radar.clear { border-color: #000; }
+  }
+  @media (max-width: 900px) {
+    .grid { grid-template-columns: repeat(2, 1fr); }
+    .addrow { grid-template-columns: 1fr; }
+    .sliders { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div id="nf-demo-banner" role="note" style="font:600 13px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#16120d;color:#f7f2e7;padding:10px 16px;text-align:center;letter-spacing:.01em;">
+  Interactive demo, fictional data. Generated locally by the NeuroFamily Agent and kept on your own device when installed.
+</div>
+<script>/* demo seed: fictional data, demo-only key */
+
+(function () {
+  function iso(offset) {
+    var d = new Date(); d.setDate(d.getDate() + offset);
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  }
+  var plan = {
+    1: [{ label: "Open-plan team lunch", kind: "event", mask: 5, sens: 3, exec: 2 },
+        { label: "Dentist, 2pm", kind: "event", mask: 1, sens: 5, exec: 3 }],
+    2: [{ label: "Social dinner with the in-laws", kind: "event", mask: 5, sens: 3, exec: 2 }],
+    4: [{ label: "Quiet day, nothing booked", kind: "recovery", recharge: 5 }]
+  };
+  var days = [];
+  for (var i = 0; i < 7; i++) {
+    var items = [];
+    (plan[i] || []).forEach(function (it, k) {
+      items.push({ id: "d" + i + k, label: it.label, kind: it.kind,
+                   mask: it.mask || 3, sens: it.sens || 3, exec: it.exec || 3,
+                   recharge: it.recharge || 3 });
+    });
+    days.push({ date: iso(i), items: items, swap: i === 1 ? "- Block 90 mins quiet dark-room buffer after this event" : "" });
+  }
+  try {
+    localStorage.setItem("nf-demo-radar-v1",
+      JSON.stringify({ start: iso(0), thresholds: { day: 18, window: 28 }, days: days }));
+  } catch (e) {}
+})();
+
+</script>
+
+<div class="wrap">
+  <h1>Spoon Collision Radar</h1>
+  <p class="sub">A calendar shows overlapping times. This shows overlapping nervous systems. Saves in this browser only; nothing leaves this device.</p>
+
+  <div class="toolbar">
+    <button class="ghost" id="btnExport">Export backup</button>
+    <button class="ghost" id="btnImport">Restore backup</button>
+    <button class="ghost" id="btnPrint">Print</button>
+    <button class="ghost" id="btnClear">Clear week</button>
+    <input type="file" id="importFile" accept="application/json" style="display:none">
+  </div>
+
+  <section id="settings">
+    <h2>Your thresholds</h2>
+    <div class="setrow">
+      <label>Week starts
+        <input type="date" id="startDate">
+      </label>
+      <label>One day is heavy above
+        <input type="number" id="thDay" min="1" max="60" step="1">
+      </label>
+      <label>A 48-hour window is heavy above
+        <input type="number" id="thWindow" min="1" max="120" step="1">
+      </label>
+    </div>
+    <p class="hint">Set these from a good week you have actually had, not from ambition. A day with three 5s scores 15 on its own.</p>
+  </section>
+
+  <section id="addForm">
+    <h2>Add something</h2>
+    <div class="kindbar">
+      <button class="small ghost" id="kindEvent" aria-pressed="true">Loads energy (event)</button>
+      <button class="small ghost" id="kindRecovery" aria-pressed="false">Restores energy (recovery)</button>
+    </div>
+    <div class="addrow">
+      <label>Day
+        <select id="dayPick"></select>
+      </label>
+      <label>What is it
+        <input type="text" id="labelIn" placeholder="Open-plan team lunch">
+      </label>
+      <button id="btnAdd">Add</button>
+    </div>
+    <div class="sliders" id="loadSliders">
+      <label>Masking / social load <span class="v" id="vMask">3</span>
+        <input type="range" id="mask" min="1" max="5" value="3">
+      </label>
+      <label>Sensory intensity <span class="v" id="vSens">3</span>
+        <input type="range" id="sens" min="1" max="5" value="3">
+      </label>
+      <label>Executive / decision demand <span class="v" id="vExec">3</span>
+        <input type="range" id="exec" min="1" max="5" value="3">
+      </label>
+    </div>
+    <div class="sliders" id="recSliders" style="display:none; grid-template-columns: 1fr;">
+      <label>How much it restores <span class="v" id="vRec">3</span>
+        <input type="range" id="rec" min="1" max="5" value="3">
+      </label>
+    </div>
+    <p class="hint">1 is barely any. 5 is the worst version of it. Recovery blocks subtract, so a real rest day is allowed to pull a bad week back.</p>
+    <div class="status" id="status"></div>
+  </section>
+
+  <div class="radar" id="radar"></div>
+
+  <section>
+    <h2>Seven days</h2>
+    <div class="grid" id="grid"></div>
+    <p class="foot">Each item scores 3 to 15 (three sliders, 1 to 5 each). A recovery block subtracts its strength times two. The radar flags any day over your daily threshold and any 48-hour window over the window threshold, which is the pair that usually ends in a shutdown.</p>
+    <p class="status" id="printNote"></p>
+  </section>
+</div>
+
+<script>
+var KEY = "nf-demo-radar-v1";
+var DAYS = 7;
+
+var SWAPS = [
+  "Can this meeting move to async?",
+  "Block 90 mins quiet dark-room buffer after this event",
+  "Switch dinner to Survival Tier",
+  "Move the dentist to a lighter week",
+  "Cut one of the two social things",
+  "Ask for a written agenda beforehand, camera off",
+  "Do the recovery block before, not after"
+];
+
+function todayISO() {
+  var d = new Date();
+  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+}
+
+function addDays(iso, n) {
+  var p = String(iso).split("-").map(Number);
+  var d = new Date(Date.UTC(p[0], p[1] - 1, p[2]));
+  d.setUTCDate(d.getUTCDate() + n);
+  return d.toISOString().slice(0, 10);
+}
+
+function weekday(iso) {
+  var p = iso.split("-").map(Number);
+  var d = new Date(Date.UTC(p[0], p[1] - 1, p[2]));
+  return d.toLocaleDateString("en-AU", { weekday: "short", timeZone: "UTC" });
+}
+
+function prettyDate(iso) {
+  var p = iso.split("-").map(Number);
+  var d = new Date(Date.UTC(p[0], p[1] - 1, p[2]));
+  return d.toLocaleDateString("en-AU", { day: "numeric", month: "short", timeZone: "UTC" });
+}
+
+function daysUntil(iso) {
+  var a = new Date(todayISO() + "T00:00:00Z").getTime();
+  var b = new Date(iso + "T00:00:00Z").getTime();
+  return Math.round((b - a) / 86400000);
+}
+
+function unit(n) { return n === 1 ? "day" : "days"; }
+
+function blank() {
+  var s = { start: todayISO(), thresholds: { day: 18, window: 28 }, days: [] };
+  for (var i = 0; i < DAYS; i++) {
+    s.days.push({ date: addDays(s.start, i), items: [], swap: "" });
+  }
+  return s;
+}
+
+var state = blank();
+
+function $(id) { return document.getElementById(id); }
+
+function load() {
+  try {
+    var raw = localStorage.getItem(KEY);
+    if (!raw) return;
+    var d = JSON.parse(raw);
+    if (!d || typeof d !== "object" || !Array.isArray(d.days)) return;
+    var out = { start: typeof d.start === "string" ? d.start : todayISO(),
+                thresholds: { day: 18, window: 28 }, days: [] };
+    if (d.thresholds) {
+      out.thresholds.day = isFinite(d.thresholds.day) ? Number(d.thresholds.day) : 18;
+      out.thresholds.window = isFinite(d.thresholds.window) ? Number(d.thresholds.window) : 28;
+    }
+    for (var i = 0; i < DAYS; i++) {
+      var src = d.days[i] || {};
+      var day = { date: src.date || addDays(out.start, i), items: [], swap: typeof src.swap === "string" ? src.swap : "" };
+      (Array.isArray(src.items) ? src.items : []).forEach(function (it) {
+        if (!it || typeof it !== "object") return;
+        day.items.push({
+          id: String(it.id || Math.random().toString(36).slice(2)),
+          label: String(it.label || "").slice(0, 120),
+          kind: it.kind === "recovery" ? "recovery" : "event",
+          mask: clamp5(it.mask), sens: clamp5(it.sens), exec: clamp5(it.exec),
+          recharge: clamp5(it.recharge)
+        });
+      });
+      out.days.push(day);
+    }
+    state = out;
+  } catch (e) {}
+}
+
+function clamp5(v) {
+  var n = Number(v);
+  if (!isFinite(n)) return 3;
+  return Math.min(5, Math.max(1, Math.round(n)));
+}
+
+function persist() {
+  try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+}
+
+function itemScore(it) {
+  if (it.kind === "recovery") return -(clamp5(it.recharge) * 2);
+  return clamp5(it.mask) + clamp5(it.sens) + clamp5(it.exec);
+}
+
+function dayTotal(day) {
+  return day.items.reduce(function (s, it) { return s + itemScore(it); }, 0);
+}
+
+function drivers(day) {
+  var d = { mask: 0, sens: 0, exec: 0 };
+  day.items.forEach(function (it) {
+    if (it.kind === "recovery") return;
+    d.mask += clamp5(it.mask); d.sens += clamp5(it.sens); d.exec += clamp5(it.exec);
+  });
+  return d;
+}
+
+/* ---------- the analysis ---------- */
+function analyse() {
+  var totals = state.days.map(dayTotal);
+  var flags = totals.map(function () { return { day: false, window: false }; });
+
+  totals.forEach(function (t, i) {
+    if (t > state.thresholds.day) flags[i].day = true;
+  });
+  for (var i = 0; i < DAYS - 1; i++) {
+    if (totals[i] + totals[i + 1] > state.thresholds.window) {
+      flags[i].window = true;
+      flags[i + 1].window = true;
+    }
+  }
+  return { totals: totals, flags: flags };
+}
+
+function worstDriver(day) {
+  var d = drivers(day);
+  var list = [["masking and social load", d.mask], ["sensory intensity", d.sens], ["decision and executive demand", d.exec]];
+  list.sort(function (a, b) { return b[1] - a[1]; });
+  return list[0][1] > 0 ? list[0] : null;
+}
+
+/* ---------- render ---------- */
+function render() {
+  var res = analyse();
+  renderRadar(res);
+  renderGrid(res);
+  $("startDate").value = state.start;
+  $("thDay").value = state.thresholds.day;
+  $("thWindow").value = state.thresholds.window;
+}
+
+function renderRadar(res) {
+  var host = $("radar");
+  var hits = [];
+  state.days.forEach(function (day, i) {
+    var f = res.flags[i];
+    if (!f.day && !f.window) return;
+    var until = daysUntil(day.date);
+    if (until < 0) return;
+    hits.push({ i: i, day: day, total: res.totals[i], f: f, until: until });
+  });
+
+  if (!hits.length) {
+    host.className = "radar clear";
+    host.innerHTML = '<h2>Energy collision radar</h2><div class="headline">Nothing ahead in the next seven days.</div>' +
+      '<p class="hint">Either the week is genuinely light, or nothing has been added yet. Add the things you already know about: appointments, big meetings, family obligations, travel.</p>';
+    return;
+  }
+
+  host.className = "radar hit";
+  var html = '<h2>Energy collision radar</h2>';
+  html += '<div class="headline">Energy collision ahead: ' + hits.length + ' flagged ' + (hits.length === 1 ? "day" : "days") + '</div>';
+
+  hits.forEach(function (h) {
+    var when = h.until === 0 ? "today" : (h.until === 1 ? "tomorrow" : "in " + h.until + " " + unit(h.until));
+    var wd = worstDriver(h.day);
+    var why = [];
+    if (h.f.day) why.push("the day itself is over your daily threshold (" + h.total + " against " + state.thresholds.day + ")");
+    if (h.f.window) why.push("the 48 hours around it are over your window threshold");
+    html += '<div class="warn">';
+    html += '<div class="when">' + weekday(h.day.date) + " " + prettyDate(h.day.date) + ", " + when + '</div>';
+    html += '<div class="why">' + why.join(", and ") + "." +
+            (wd ? " The biggest driver is " + wd[0] + "." : "") + '</div>';
+    html += '<div class="chips">';
+    SWAPS.forEach(function (s, si) {
+      html += '<button data-swap="' + si + '" data-day="' + h.i + '">' + esc(s) + '</button>';
+    });
+    html += '</div>';
+    html += '<textarea data-swapbox="' + h.i + '" placeholder="What will you change about this one? Moving one thing is enough.">' + esc(h.day.swap || "") + '</textarea>';
+    html += '</div>';
+  });
+  host.innerHTML = html;
+
+  host.querySelectorAll("button[data-swap]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var i = Number(b.dataset.day);
+      var text = SWAPS[Number(b.dataset.swap)];
+      var box = host.querySelector('textarea[data-swapbox="' + i + '"]');
+      box.value = (box.value ? box.value.replace(/\s+$/, "") + "\n" : "") + "- " + text;
+      state.days[i].swap = box.value;
+      persist();
+    });
+  });
+  host.querySelectorAll("textarea[data-swapbox]").forEach(function (t) {
+    t.addEventListener("input", function () {
+      state.days[Number(t.dataset.swapbox)].swap = t.value;
+      persist();
+    });
+  });
+}
+
+function renderGrid(res) {
+  var host = $("grid");
+  var html = "";
+  state.days.forEach(function (day, i) {
+    var total = res.totals[i];
+    var f = res.flags[i];
+    var cls = "day";
+    if (f.day) cls += " flag";
+    else if (f.window) cls += " near";
+
+    html += '<div class="' + cls + '">';
+    html += '<div class="dh">' + weekday(day.date) + '</div>';
+    html += '<div class="dd">' + prettyDate(day.date) + '</div>';
+    html += '<div class="total ' + (total > state.thresholds.day ? "over" : "ok") + '">' +
+            (total > 0 ? total : (total === 0 ? "0" : total)) + " load</div>";
+
+    if (!day.items.length) {
+      html += '<div class="empty">Nothing yet</div>';
+    }
+    day.items.forEach(function (it, ii) {
+      var sc = it.kind === "recovery"
+        ? "-" + (clamp5(it.recharge) * 2) + " restored"
+        : "M" + clamp5(it.mask) + " S" + clamp5(it.sens) + " E" + clamp5(it.exec) + " = " + itemScore(it);
+      html += '<div class="item' + (it.kind === "recovery" ? " recovery" : "") + '">' +
+              '<span class="lab">' + esc(it.label || "(unnamed)") + ' <button data-del="' + i + '-' + ii + '" aria-label="Remove">x</button></span>' +
+              '<span class="sc">' + sc + '</span></div>';
+    });
+
+    html += '</div>';
+  });
+  host.innerHTML = html;
+
+  host.querySelectorAll("button[data-del]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var parts = b.dataset.del.split("-").map(Number);
+      state.days[parts[0]].items.splice(parts[1], 1);
+      persist(); render();
+    });
+  });
+}
+
+function esc(s) {
+  return String(s == null ? "" : s)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+/* ---------- adding ---------- */
+var kind = "event";
+
+function rebuildDayPicker() {
+  var sel = $("dayPick");
+  sel.innerHTML = "";
+  state.days.forEach(function (d, i) {
+    var o = document.createElement("option");
+    o.value = String(i);
+    o.textContent = weekday(d.date) + " " + prettyDate(d.date);
+    sel.appendChild(o);
+  });
+}
+
+function syncKind() {
+  var isEvent = kind === "event";
+  $("kindEvent").setAttribute("aria-pressed", String(isEvent));
+  $("kindRecovery").setAttribute("aria-pressed", String(!isEvent));
+  $("loadSliders").style.display = isEvent ? "grid" : "none";
+  $("recSliders").style.display = isEvent ? "none" : "grid";
+}
+
+function addItem() {
+  var label = $("labelIn").value.trim();
+  if (!label) { say("Give it a name so you can see it later."); return; }
+  var i = Number($("dayPick").value) || 0;
+  var item = { id: Math.random().toString(36).slice(2), label: label.slice(0, 120), kind: kind,
+               mask: Number($("mask").value), sens: Number($("sens").value),
+               exec: Number($("exec").value), recharge: Number($("rec").value) };
+  state.days[i].items.push(item);
+  $("labelIn").value = "";
+  persist(); render();
+  say("Added. Change anything and it saves itself.");
+}
+
+function say(msg) {
+  var el = $("status");
+  el.textContent = msg;
+  setTimeout(function () { if (el.textContent === msg) el.textContent = ""; }, 3200);
+}
+
+/* ---------- backup ---------- */
+function exportBackup() {
+  var blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "spoon-collision-radar-backup.json";
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
+}
+
+function importBackup(ev) {
+  var file = ev.target.files && ev.target.files[0];
+  if (!file) return;
+  var r = new FileReader();
+  r.onload = function () {
+    try {
+      var d = JSON.parse(r.result);
+      if (!d || typeof d !== "object" || !Array.isArray(d.days)) throw new Error("bad");
+      try { localStorage.setItem(KEY, JSON.stringify(d)); } catch (e) {}
+      state = blank(); load(); rebuildDayPicker(); render();
+      say("Backup restored.");
+    } catch (e) { alert("That file could not be read as a backup."); }
+  };
+  r.readAsText(file);
+  ev.target.value = "";
+}
+
+/* ---------- wire up ---------- */
+$("startDate").addEventListener("change", function () {
+  var v = $("startDate").value;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(v)) return;
+  state.start = v;
+  state.days.forEach(function (d, i) { d.date = addDays(state.start, i); });
+  persist(); rebuildDayPicker(); render();
+});
+$("thDay").addEventListener("input", function () {
+  var n = Number($("thDay").value);
+  if (isFinite(n) && n > 0) { state.thresholds.day = n; persist(); render(); }
+});
+$("thWindow").addEventListener("input", function () {
+  var n = Number($("thWindow").value);
+  if (isFinite(n) && n > 0) { state.thresholds.window = n; persist(); render(); }
+});
+
+["mask", "sens", "exec", "rec"].forEach(function (id) {
+  $(id).addEventListener("input", function () {
+    $("v" + id.charAt(0).toUpperCase() + id.slice(1)).textContent = $(id).value;
+  });
+});
+
+$("kindEvent").addEventListener("click", function () { kind = "event"; syncKind(); });
+$("kindRecovery").addEventListener("click", function () { kind = "recovery"; syncKind(); });
+$("btnAdd").addEventListener("click", addItem);
+$("labelIn").addEventListener("keydown", function (e) { if (e.key === "Enter") addItem(); });
+
+$("btnExport").addEventListener("click", exportBackup);
+$("btnImport").addEventListener("click", function () { $("importFile").click(); });
+$("importFile").addEventListener("change", importBackup);
+$("btnPrint").addEventListener("click", function () { window.print(); });
+$("btnClear").addEventListener("click", function () {
+  if (!confirm("Clear the week? Export a backup first if unsure.")) return;
+  try { localStorage.removeItem(KEY); } catch (e) {}
+  state = blank(); rebuildDayPicker(); render(); say("Cleared.");
+});
+
+load();
+rebuildDayPicker();
+syncKind();
+render();
+</script>
+</body>
+</html>
