@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Try the demos · NeuroDivergeAgent</title>
+<meta name="description" content="Four working examples of what the NeuroFamily Agent produces: an IEP companion, a low-demand food diary, chunked lessons and the printed Morning Edition.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://www.neurodivergeagent.com/demos/">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f7f2e7; --ink: #2e2c29;
+    --sage: #b7c6a6; --terra: #e3a468; --blue: #9fb6c2; --rose: #eab7bc; --mustard: #e9bc4a;
+    --deep-terra: #a3542f; --line: #e0d8c8;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink);
+    font-family: "Inter", system-ui, sans-serif; line-height: 1.6; }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 22px; }
+  a { color: var(--deep-terra); }
+  header { border-bottom: 1px solid var(--line); }
+  header .wrap { display: flex; align-items: center; justify-content: space-between;
+    padding-top: 16px; padding-bottom: 16px; gap: 12px; flex-wrap: wrap; }
+  .brand { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 1.05rem;
+    text-decoration: none; color: var(--ink); letter-spacing: -.01em; }
+  .back { font-size: .9rem; text-decoration: none; font-weight: 600; }
+
+  .banner { background: var(--ink); color: var(--paper); font-size: .84rem; font-weight: 600;
+    text-align: center; padding: 10px 16px; }
+
+  .hero { padding: 52px 0 8px; }
+  .kicker { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--deep-terra); font-weight: 700; }
+  h1 { font-family: "Space Grotesk", sans-serif; font-size: clamp(2rem, 5vw, 3rem);
+    line-height: 1.08; letter-spacing: -.02em; margin: .3em 0 .35em; }
+  .lede { font-size: 1.08rem; max-width: 62ch; color: #4a463f; }
+
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 18px; padding: 34px 0 10px; }
+  @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+  .card { background: #fff; border: 1px solid var(--line); padding: 26px 24px 22px;
+    display: flex; flex-direction: column; text-decoration: none; color: inherit;
+    transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease; }
+  .card:hover, .card:focus-visible { transform: translateY(-3px);
+    box-shadow: 0 12px 26px rgba(46,44,41,.10); border-color: var(--terra); }
+  .tag { display: inline-block; font-size: .68rem; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; padding: 4px 9px; background: var(--sage); color: #2b3a24;
+    align-self: flex-start; margin-bottom: 14px; }
+  .card h2 { font-family: "Space Grotesk", sans-serif; font-size: 1.24rem; margin: 0 0 8px;
+    letter-spacing: -.01em; }
+  .card p { font-size: .94rem; color: #4a463f; margin: 0 0 18px; }
+  .go { margin-top: auto; font-weight: 700; font-size: .92rem; color: var(--deep-terra); }
+  .go::after { content: " \2192"; }
+
+  .note { background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--terra);
+    padding: 22px 24px; margin: 30px 0 10px; }
+  .note h2 { font-family: "Space Grotesk", sans-serif; font-size: 1.05rem; margin: 0 0 8px; }
+  .note p { margin: 0; font-size: .94rem; color: #4a463f; }
+
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; padding: 30px 0 60px; }
+  .btn { display: inline-block; padding: 13px 22px; font-weight: 700; font-size: .95rem;
+    text-decoration: none; background: var(--ink); color: var(--paper); border: 2px solid var(--ink); }
+  .btn.ghost { background: transparent; color: var(--ink); }
+  .btn:hover, .btn:focus-visible { background: var(--deep-terra); border-color: var(--deep-terra);
+    color: #fff; }
+  .btn.ghost:hover, .btn.ghost:focus-visible { background: var(--ink); color: var(--paper);
+    border-color: var(--ink); }
+
+  footer { border-top: 1px solid var(--line); padding: 26px 0 40px; font-size: .86rem;
+    color: #5f5b53; }
+  footer p { margin: 0 0 8px; }
+  @media print {
+    header, .cta-row, footer .noprint { display: none; }
+    body { background: #fff; }
+    .card { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="banner">Interactive demos, fictional family data. Everything below runs in your browser; nothing is sent anywhere.</div>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="/">NeuroDivergeAgent</a>
+    <a class="back" href="/">Back to the main page</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="hero">
+    <div class="kicker">Try before you install</div>
+    <h1>Four things the agent actually makes.</h1>
+    <p class="lede">No Python, no setup, no account. These are real artifacts from the Family Agent, filled with a made-up nine year old called Leo so you can see the shape of the output before deciding anything.</p>
+  </div>
+
+  <div class="grid">
+
+    <a class="card" href="iep-companion.html">
+      <span class="tag">For school meetings</span>
+      <h2>IEP Companion</h2>
+      <p>A translated plan: strengths first, goals in language Leo can read himself, classroom accommodations, and a question list for the meeting. Five colour themes.</p>
+      <span class="go">Open the plan</span>
+    </a>
+
+    <a class="card" href="food-diary.html">
+      <span class="tag">Low demand</span>
+      <h2>Sensory-friendly food diary</h2>
+      <p>Safe foods, texture notes and a log that records pressure-free context instead of scoring how much was eaten. Built for ARFID and avoidant eating, not for diet culture.</p>
+      <span class="go">Open the diary</span>
+    </a>
+
+    <a class="card" href="lesson-chunks.html">
+      <span class="tag">Homework</span>
+      <h2>Lesson chunks</h2>
+      <p>One dense classroom task broken into steps small enough to start, with a check box each. The same content, reshaped so the first step is obvious.</p>
+      <span class="go">See the breakdown</span>
+    </a>
+
+    <a class="card" href="morning-edition.html">
+      <span class="tag">Printed A4</span>
+      <h2>The Morning Edition</h2>
+      <p>The sheet that goes on the kitchen table at 7:15: today at a glance, three routine anchors, the appointments that matter, and one dinner table question.</p>
+      <span class="go">Read today's sheet</span>
+    </a>
+
+  </div>
+
+  <div class="note">
+    <h2>What is and is not happening here</h2>
+    <p>Leo is invented. Every name, goal, food and appointment on these pages is synthetic, written to show the format rather than to describe a real child. These pages load no trackers and make no network calls once open. Your own version runs entirely on your own device, using your own model, and your family's folder never leaves it unless you send it somewhere yourself.</p>
+  </div>
+
+  <div class="cta-row">
+    <a class="btn" href="https://github.com/boktoday/neurofamily-hermes-agent" target="_blank" rel="noopener">Get the Family Agent</a>
+    <a class="btn ghost" href="https://github.com/boktoday/neurodivergeagent-solo-hermes-agent" target="_blank" rel="noopener">Get the Individual Agent</a>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>A project by Brendan O'Keefe. Free for individuals, families, schools and non-profits; commercial resale is not permitted.</p>
+    <p class="noprint">Feedback: <a href="mailto:brendan@aichampion.com.au">brendan@aichampion.com.au</a>. This inbox is not monitored for crisis or clinical support. In an emergency call 000 in Australia, or Lifeline on 13 11 14.</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Morning Edition sample · NeuroDivergeAgent</title>
+<meta name="description" content="A sample of the printed Morning Edition sheet the NeuroFamily Agent puts on the kitchen table: today at a glance, three routine anchors, appointments and a dinner table question.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://www.neurodivergeagent.com/demos/morning-edition.html">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #2e2c29; --paper: #f7f2e7; --line: #e0d8c8; --deep-terra: #a3542f; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { background: var(--paper); color: var(--ink); font-family: "Inter", system-ui, sans-serif;
+    line-height: 1.5; padding: 0 0 48px; }
+
+  .banner { background: #2e2c29; color: #f7f2e7; font-size: .84rem; font-weight: 600;
+    text-align: center; padding: 10px 16px; }
+
+  .toolbar { max-width: 210mm; margin: 18px auto 0; padding: 0 14px; display: flex;
+    gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap;
+    font-size: .88rem; }
+  .toolbar a { color: var(--deep-terra); font-weight: 600; text-decoration: none; }
+  .toolbar .hint { color: #6b665e; }
+
+  /* the sheet itself: true A4, monochrome, print-exact */
+  .sheet { width: 210mm; min-height: 297mm; margin: 18px auto; background: #fff;
+    color: #000; padding: 18mm 17mm 16mm; border: 1px solid var(--line);
+    font-family: "Inter", system-ui, sans-serif; }
+
+  .masthead { border-bottom: 3px solid #000; padding-bottom: 7px; margin-bottom: 4px; }
+  .masthead .row { display: flex; justify-content: space-between; align-items: baseline;
+    gap: 12px; flex-wrap: wrap; }
+  .masthead h1 { font-family: "Space Grotesk", sans-serif; font-size: 23pt; margin: 0;
+    letter-spacing: -.02em; line-height: 1; }
+  .masthead .when { font-size: 9pt; text-transform: uppercase; letter-spacing: .16em;
+    font-weight: 600; }
+  .subrule { display: flex; justify-content: space-between; font-size: 8.5pt;
+    border-bottom: 1px solid #000; padding: 5px 0 6px; margin-bottom: 14px;
+    letter-spacing: .04em; }
+
+  h2 { font-family: "Space Grotesk", sans-serif; font-size: 10.5pt; text-transform: uppercase;
+    letter-spacing: .13em; margin: 0 0 7px; padding-bottom: 3px;
+    border-bottom: 1px solid #000; }
+  section { margin-bottom: 15px; break-inside: avoid; }
+  p { margin: 0 0 6px; font-size: 10.5pt; }
+
+  .glance { font-size: 11pt; }
+  .anchor { display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px dotted #999;
+    font-size: 10.5pt; }
+  .anchor:last-child { border-bottom: 0; }
+  .anchor .t { font-weight: 700; min-width: 62px; font-variant-numeric: tabular-nums; }
+  .anchor .what { flex: 1; }
+  .anchor .what .k { display: block; font-size: 8.5pt; text-transform: uppercase;
+    letter-spacing: .1em; color: #444; }
+
+  .appt { border: 1.5px solid #000; padding: 10px 12px; }
+  .appt .who { font-weight: 700; font-size: 12pt; }
+  .appt .meta { font-size: 9.5pt; }
+  .appt .bring { font-size: 9.5pt; margin-top: 6px; }
+
+  .question { border-top: 3px solid #000; border-bottom: 3px solid #000; padding: 13px 0;
+    margin-top: 4px; }
+  .question .q { font-family: "Space Grotesk", sans-serif; font-size: 15pt; line-height: 1.25;
+    margin: 0; letter-spacing: -.01em; }
+  .question .lead { font-size: 8.5pt; text-transform: uppercase; letter-spacing: .14em;
+    font-weight: 700; margin-bottom: 6px; }
+
+  .foot { margin-top: 14px; border-top: 1px solid #000; padding-top: 7px;
+    font-size: 8pt; color: #333; display: flex; justify-content: space-between; gap: 12px;
+    flex-wrap: wrap; }
+
+  @page { size: A4; margin: 0; }
+  @media print {
+    body { background: #fff; padding: 0; }
+    .banner, .toolbar { display: none !important; }
+    .sheet { border: 0; margin: 0; box-shadow: none; width: auto; min-height: auto;
+      padding: 16mm 15mm; }
+  }
+  @media (max-width: 820px) {
+    .sheet { width: auto; min-height: 0; margin: 14px 12px; padding: 22px 18px; }
+    .masthead h1 { font-size: 18pt; }
+  }
+</style>
+</head>
+<body>
+
+<div class="banner">Interactive demo, fictional family data. Generated locally by the NeuroFamily Agent and kept on your own device when installed.</div>
+
+<div class="toolbar">
+  <a href="./">&larr; All demos</a>
+  <span class="hint">This page is a true A4 sheet. Print it at 100% to see what lands on the table.</span>
+</div>
+
+<div class="sheet">
+
+  <div class="masthead">
+    <div class="row">
+      <h1>The Morning Edition</h1>
+      <span class="when">Wednesday 18 November</span>
+    </div>
+  </div>
+  <div class="subrule">
+    <span>Prepared 07:15</span>
+    <span>For Leo</span>
+    <span>One page, on purpose</span>
+  </div>
+
+  <section>
+    <h2>Today at a glance</h2>
+    <p class="glance">School Day 6 of 10. Library day, so the blue bag goes in first. 19&deg;C with showers easing by the afternoon; the jumper is enough. Nothing new after school until 3:30.</p>
+  </section>
+
+  <section>
+    <h2>Three anchors</h2>
+    <div class="anchor">
+      <span class="t">7:30</span>
+      <span class="what"><span class="k">Before school</span>Breakfast at the bench, then shoes by the door. Same order as always.</span>
+    </div>
+    <div class="anchor">
+      <span class="t">3:30</span>
+      <span class="what"><span class="k">After school</span>Ten minutes of quiet in your room first, then a snack. No questions about the day until after the snack.</span>
+    </div>
+    <div class="anchor">
+      <span class="t">7:00</span>
+      <span class="what"><span class="k">Evening</span>Screens off, then the same three things: teeth, pyjamas, one chapter. Lights at 8:30.</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Appointment</h2>
+    <div class="appt">
+      <div class="who">Occupational therapy, Priya</div>
+      <div class="meta">Today, 4:15pm to 5:00pm. Clinic on High Street, second door past the chemist.</div>
+      <div class="bring">Bring: the blue folder, and the new headphones if the waiting room is busy.</div>
+    </div>
+  </section>
+
+  <section class="question">
+    <div class="lead">One thing to ask at dinner</div>
+    <p class="q">If you could build one room in Minecraft that was only for you, what would be inside it?</p>
+  </section>
+
+  <div class="foot">
+    <span>Generated on your own device by the NeuroFamily Agent.</span>
+    <span>Sample data. Leo is not a real person.</span>
+  </div>
+
+</div>
+
+</body>
+</html>

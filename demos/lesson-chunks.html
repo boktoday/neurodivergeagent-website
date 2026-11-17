@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson Chunks sample · NeuroDivergeAgent</title>
+<meta name="description" content="One dense classroom task broken into steps small enough to start, with a tick box each. A sample output from the NeuroFamily Agent.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://www.neurodivergeagent.com/demos/lesson-chunks.html">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --paper: #f7f2e7; --ink: #2e2c29; --sage: #b7c6a6; --terra: #e3a468;
+    --line: #e0d8c8; --deep-terra: #a3542f; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink);
+    font-family: "Inter", system-ui, sans-serif; line-height: 1.6; }
+  .banner { background: var(--ink); color: var(--paper); font-size: .84rem; font-weight: 600;
+    text-align: center; padding: 10px 16px; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 22px; }
+  a { color: var(--deep-terra); }
+  .top { display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    flex-wrap: wrap; padding: 16px 0; border-bottom: 1px solid var(--line);
+    font-size: .9rem; }
+  .top a { font-weight: 600; text-decoration: none; }
+
+  header { padding: 40px 0 6px; }
+  .kicker { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--deep-terra); font-weight: 700; }
+  h1 { font-family: "Space Grotesk", sans-serif; font-size: clamp(1.8rem, 4.4vw, 2.6rem);
+    line-height: 1.1; letter-spacing: -.02em; margin: .3em 0 .3em; }
+  .lede { font-size: 1.02rem; max-width: 64ch; color: #4a463f; margin: 0 0 26px; }
+
+  .panes { display: grid; grid-template-columns: 1fr 1.25fr; gap: 20px; padding-bottom: 26px; }
+  @media (max-width: 780px) { .panes { grid-template-columns: 1fr; } }
+
+  .pane { background: #fff; border: 1px solid var(--line); padding: 22px; }
+  .pane h2 { font-family: "Space Grotesk", sans-serif; font-size: .82rem; letter-spacing: .12em;
+    text-transform: uppercase; margin: 0 0 14px; color: #6b665e; }
+
+  .dense { font-size: .95rem; color: #3a3733; background: #f4efe3; border-left: 3px solid #c9c0ad;
+    padding: 14px 16px; }
+  .dense .src { display: block; font-size: .74rem; text-transform: uppercase;
+    letter-spacing: .1em; color: #7d776d; margin-top: 10px; font-weight: 700; }
+
+  ol.chunks { list-style: none; counter-reset: c; margin: 0; padding: 0; }
+  ol.chunks li { counter-increment: c; position: relative; padding: 11px 0 11px 44px;
+    border-bottom: 1px solid #eee7d8; cursor: pointer; font-size: .97rem;
+    transition: color .15s ease, opacity .15s ease; }
+  ol.chunks li:last-child { border-bottom: 0; }
+  ol.chunks li::before { content: counter(c); position: absolute; left: 0; top: 10px;
+    width: 26px; height: 26px; border: 2px solid var(--ink); display: grid; place-items: center;
+    font-family: "Space Grotesk", sans-serif; font-size: .82rem; font-weight: 700;
+    background: #fff; }
+  ol.chunks li .mins { display: block; font-size: .78rem; color: #7d776d; margin-top: 3px; }
+  ol.chunks li.done { color: #8b867c; }
+  ol.chunks li.done::before { content: "\2713"; background: var(--sage); border-color: var(--sage); }
+  ol.chunks li.done .mins { text-decoration: line-through; }
+  ol.chunks li:focus-visible { outline: 3px solid var(--terra); outline-offset: 2px; }
+
+  .progress { margin-top: 16px; font-size: .86rem; font-weight: 600; color: #4a463f; }
+  .bar { height: 8px; background: #eee7d8; margin-top: 7px; }
+  .bar span { display: block; height: 100%; width: 0; background: var(--sage);
+    transition: width .2s ease; }
+
+  .why { background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--terra);
+    padding: 20px 22px; margin-bottom: 34px; }
+  .why h2 { font-family: "Space Grotesk", sans-serif; font-size: 1rem; margin: 0 0 8px; }
+  .why p { margin: 0; font-size: .94rem; color: #4a463f; }
+
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; padding-bottom: 54px; }
+  .btn { padding: 13px 22px; font-weight: 700; font-size: .95rem; text-decoration: none;
+    background: var(--ink); color: var(--paper); border: 2px solid var(--ink); }
+  .btn.ghost { background: transparent; color: var(--ink); }
+  .btn:hover, .btn:focus-visible { background: var(--deep-terra); border-color: var(--deep-terra);
+    color: #fff; }
+
+  footer { border-top: 1px solid var(--line); padding: 24px 0 40px; font-size: .85rem;
+    color: #5f5b53; }
+  footer p { margin: 0 0 6px; }
+
+  @media print {
+    .banner, .top, .cta-row, footer .noprint { display: none; }
+    body { background: #fff; }
+    .panes { grid-template-columns: 1fr; }
+    .pane { border-color: #bbb; break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="banner">Interactive demo, fictional family data. Generated locally by the NeuroFamily Agent and kept on your own device when installed.</div>
+
+<div class="wrap">
+  <div class="top">
+    <a href="./">&larr; All demos</a>
+    <span>Tap a step to tick it off. Nothing is saved and nothing is sent.</span>
+  </div>
+
+  <header>
+    <div class="kicker">Lesson chunks</div>
+    <h1>The same task, in steps small enough to start.</h1>
+    <p class="lede">A task comes home as one paragraph. For a lot of young people that paragraph is the wall. This is the identical work, reshaped so the first step is obvious and the end is visible.</p>
+  </header>
+
+  <div class="panes">
+    <div class="pane">
+      <h2>What came home</h2>
+      <div class="dense">
+        Prepare a one page report on a dinosaur of your choice, including its habitat, diet, size, and three interesting facts, with a labelled diagram, to be presented to the class on Friday.
+        <span class="src">Year 4 science, as issued</span>
+      </div>
+    </div>
+
+    <div class="pane">
+      <h2>What Leo got</h2>
+      <ol class="chunks" id="chunks">
+        <li tabindex="0">Pick your dinosaur. Just the name.<span class="mins">2 minutes</span></li>
+        <li tabindex="0">Find one photo of it and save it.<span class="mins">5 minutes</span></li>
+        <li tabindex="0">Write three words about its size and where it lived.<span class="mins">5 minutes</span></li>
+        <li tabindex="0">Write what it ate. One sentence is enough.<span class="mins">5 minutes</span></li>
+        <li tabindex="0">Copy the three best facts from the book, not from memory.<span class="mins">10 minutes</span></li>
+        <li tabindex="0">Read it out loud once to someone. Then stop for today.<span class="mins">5 minutes</span></li>
+      </ol>
+      <div class="progress">
+        <span id="count">0 of 6 done</span>
+        <div class="bar"><span id="fill"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="why">
+    <h2>Why this is not just a prettier list</h2>
+    <p>The wall is usually the size of the first step, not the size of the task. Each chunk here has a visible finish and a time estimate, so starting is a smaller decision. The last step is deliberately a stop, which is part of the point.</p>
+  </div>
+
+  <div class="cta-row">
+    <a class="btn" href="https://github.com/boktoday/neurofamily-hermes-agent" target="_blank" rel="noopener">Get the Family Agent</a>
+    <a class="btn ghost" href="morning-edition.html">See the Morning Edition</a>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p>Sample output. Leo is invented; the task is a real Year 4 shape you will recognise.</p>
+    <p class="noprint">Feedback: <a href="mailto:brendan@aichampion.com.au">brendan@aichampion.com.au</a>. Not monitored for crisis or clinical support. In an emergency call 000 in Australia, or Lifeline on 13 11 14.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var list = document.getElementById("chunks");
+  var count = document.getElementById("count");
+  var fill = document.getElementById("fill");
+  var items = [].slice.call(list.children);
+
+  function update() {
+    var done = items.filter(function (li) { return li.classList.contains("done"); }).length;
+    count.textContent = done + " of " + items.length + " done";
+    fill.style.width = (done / items.length * 100) + "%";
+  }
+
+  items.forEach(function (li) {
+    function toggle() { li.classList.toggle("done"); update(); }
+    li.addEventListener("click", toggle);
+    li.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
+    });
+  });
+
+  update();
+})();
+</script>
+
+</body>
+</html>
